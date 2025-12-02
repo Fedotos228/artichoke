@@ -52,7 +52,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className='max-w-[439px]'>
+    <div className='max-w-full md:max-w-[439px] w-full'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
@@ -127,7 +127,7 @@ export default function ContactForm() {
               </FormItem>
             )}
           />
-          <Button variant='white' type="submit" className='xl:max-w-full'>Send message</Button>
+          <Button variant='white' type="submit" className='mx-auto md:max-w-full'>Send message</Button>
         </form>
       </Form>
     </div>

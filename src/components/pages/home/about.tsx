@@ -50,6 +50,12 @@ export default function About() {
     if (!rootRef.current) return
     const blocks = Array.from(rootRef.current.querySelectorAll('.about-block')) as HTMLElement[]
 
+    const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+      blocks.forEach((b) => gsap.set(b, { opacity: 1, y: 0 }))
+      return
+    }
+
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -61,11 +67,11 @@ export default function About() {
           obs.unobserve(entry.target)
         }
       })
-    }, { threshold: 0.8 })
+    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' })
 
     // Prepare blocks and observe
     blocks.forEach((b) => {
-      gsap.set(b, { opacity: 0, y: 24 })
+      gsap.set(b, { opacity: 0, y: 88 })
       observer.observe(b)
     })
 

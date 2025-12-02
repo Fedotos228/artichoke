@@ -95,6 +95,7 @@
 
 body {
   font-family: var(--font-gilroy);
+  background: #FFF9EE;
 }
 
 @layer ui {
@@ -179,6 +180,10 @@ body {
 
 .about-block:first-of-type .order-class {
   @apply order-2 md:order-1;
+}
+
+.about-block:last-of-type .order-class {
+  @apply order-2 md:-order-1;
 }
 
 .about-block .image-height {

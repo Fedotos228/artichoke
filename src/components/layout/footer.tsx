@@ -4,7 +4,7 @@ import ContactForm from '../forms/contact-form'
 export default function Footer() {
   return (
     <footer className=''>
-      <div className='grid grid-cols-[1fr_639px] gap-0.5'>
+      <div className='grid md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_639px] gap-0.5'>
         <div className='relative w-full h-auto'>
           <Image
             src='/footer-gif.gif'
@@ -15,7 +15,7 @@ export default function Footer() {
           />
         </div>
 
-        <div className='bg-foreground px-24 py-16'>
+        <div className='bg-foreground px-10 lg:px-24 py-16 place-items-center'>
           <h3 className='text-background text-center mb-6'>Let’s create together</h3>
           <ContactForm />
         </div>

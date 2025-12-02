@@ -32,7 +32,7 @@ export const Languages = () => {
   }
 
   return (
-    <div className="flex gap-9">
+    <div className="flex items-center md:gap-9 md:flex-row flex-col md:flex-nowrap gap-0.5">
       {i18n.locales.map((locale) => (
         <Link
           key={locale}

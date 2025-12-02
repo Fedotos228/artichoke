@@ -29,7 +29,7 @@ export default function RequestCall() {
   return (
     <div className='max-w-[612px]'>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2 gap-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <FormField
             control={form.control}
             name="phone"
@@ -52,6 +52,5 @@ export default function RequestCall() {
         </form>
       </Form>
     </div>
-
   )
 }

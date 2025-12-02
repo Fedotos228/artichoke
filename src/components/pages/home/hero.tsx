@@ -1,5 +1,3 @@
-"use client"
-
 import HeroContact from '@/components/shared/hero-contact'
 import ProjectGrid from '@/components/shared/project-grid'
 import { ProjectCardProps } from '@/types/projects.type'

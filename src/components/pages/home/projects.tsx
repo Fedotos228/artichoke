@@ -28,12 +28,12 @@ const homeProjects: ProjectCardProps[] = [
 
 export default function HomeProjects() {
   return (
-    <div className='lg:pb-10 xl:pb-[60px]' id='#projects'>
+    <div className='pb-10 xl:pb-[60px]' id='#projects'>
       <h2 className='text-center mb-14'>Your space deserves such <span className='italic'>beauty</span> too</h2>
 
       <ProjectGrid projects={homeProjects} />
 
-      <div className='inline-flex justify-center w-full mt-10'>
+      <div className='inline-flex justify-center w-full mt-10 px-4'>
         <Button asChild variant={'outline'}>
           <Link href={paths.projects()}>See all projects</Link>
         </Button>

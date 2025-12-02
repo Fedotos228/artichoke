@@ -19,12 +19,13 @@ export async function generateStaticParams() {
 
 export default async function RootLayout({
   children,
-  params
-}: Readonly<{
+  params,
+}: {
   children: React.ReactNode
-  params: Promise<{ lang: Locale }>
-}>) {
-  const { lang } = await params
+  params: { lang: string } | Promise<{ lang: string }>
+}) {
+  const resolved = await params
+  const lang = resolved.lang as Locale
 
   return (
     <html lang={lang}>
