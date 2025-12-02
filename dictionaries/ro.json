@@ -1,0 +1,9 @@
+{
+  "server-component": {
+    "welcome": "Bun venit"
+  },
+  "counter": {
+    "increment": "Crește",
+    "decrement": "Scadeză"
+  }
+}
