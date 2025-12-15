@@ -1,19 +1,22 @@
-import { ProjectSingle } from '@/types/projects.type'
+import { ProjectDetails } from '@/types/projects.type'
+import { WPRendered } from '@/types/wp.types'
 
-export default function ProjectDescription({ description }: Pick<ProjectSingle, 'description'>) {
+export default function ProjectDescription({ 
+  content, 
+  details 
+}: {
+  content: WPRendered,
+  details: ProjectDetails[]
+}) {
   return (
     <div>
       <h3>About the project</h3>
       <div className='grid grid-cols-2 mb-20'>
         <div>
-          {description.paragraph.map((p, idx) => (
-            <p key={idx} className='mb-4 last:mb-0'>
-              {p}
-            </p>
-          ))}
+          <div dangerouslySetInnerHTML={{ __html: content.rendered }} />
         </div>
         <div className='justify-self-center'>
-          {description.details.map((detail, idx) => (
+          {details.map((detail, idx) => (
             <div key={idx} className='mb-4 last:mb-0'>
               <strong>{detail.label}:</strong>
               <p>{detail.value}</p>

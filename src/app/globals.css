@@ -189,14 +189,15 @@ body {
   height: clamp(538px, 48vh, 738px);
 }
 
-.about-block .text-container {
+.about-block .about-text-container {
   @apply max-w-[640px];
+
 }
 
-.about-block .text-container h5 {
+.about-block .about-text-container h5 {
   @apply uppercase italic mb-6;
 }
 
-.about-block .text-container p:not(:last-child) {
+.about-block .about-text-container p:not(:last-child) {
   @apply mb-3;
 }

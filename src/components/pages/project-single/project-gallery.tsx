@@ -2,12 +2,12 @@
 
 import useFancybox from '@/hooks/useFancybox'
 import { cn } from '@/lib/utils'
-import { ProjectSingle } from '@/types/projects.type'
+import { ProjectGallery as ProjectGalleryType } from '@/types/projects.type'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Ref } from 'react'
 
-export default function ProjectGallery({ gallery }: { gallery?: ProjectSingle['gallery'] }) {
+export default function ProjectGallery({ gallery }: { gallery?: ProjectGalleryType[] }) {
   const [fancyboxref] = useFancybox({
     Thumbs: {
       autoStart: false,
@@ -20,17 +20,17 @@ export default function ProjectGallery({ gallery }: { gallery?: ProjectSingle['g
 
   return (
     <div ref={fancyboxref as unknown as Ref<HTMLDivElement>} className='grid grid-cols-2 md:grid-cols-2 gap-5'>
-      {gallery.map((item, index) => (
+      {gallery.map(({ image }, index) => (
         <Link
           key={index}
-          href={item.src}
+          href={image.source_url}
           data-fancybox='gallery'
-          data-caption={item.alt || ''}
+          data-caption={image.alt_text || ''}
           className={cn('block w-full cursor-pointer', index === 0 ? 'md:col-span-2' : '', index === gallery?.length -1 ? 'md:col-span-2' : '')}
         >
           <Image
-            src={item.src}
-            alt={item.alt || `Gallery image ${index + 1}`}
+            src={image.source_url}
+            alt={image.alt_text || `Gallery image ${index + 1}`}
             width={650}
             height={740}
             className='w-full h-auto object-cover'

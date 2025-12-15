@@ -1,49 +1,16 @@
 import ProjectGrid from '@/components/shared/project-grid'
-import { ProjectCardProps } from '@/types/projects.type'
+import { getAllProjects } from '@/services/projects.service'
+import { Suspense } from 'react'
 
-const projects: ProjectCardProps[] = [
-  {
-    id: 4,
-    slug: 'proiect-4',
-    imageSrc: '/project-1.jpg',
-    title: 'Denumire proiect',
-  },
-  {
-    id: 5,
-    slug: 'proiect-5',
-    imageSrc: '/project-2.jpg',
-    title: 'Project 2',
+async function getStaticProps() {
+  
+}
 
-  },
-  {
-    id: 6,
-    slug: 'proiect-6',
-    imageSrc: '/project-3.jpg',
-    title: 'Project 3',
-  },
-  {
-    id: 7,
-    slug: 'proiect-4',
-    imageSrc: '/project-1.jpg',
-    title: 'Denumire proiect',
-  },
-  {
-    id: 8,
-    slug: 'proiect-5',
-    imageSrc: '/project-2.jpg',
-    title: 'Project 2',
+export default async function ProjectsPage() {
+  const projects = await getAllProjects()
 
-  },
-  {
-    id: 9,
-    slug: 'proiect-6',
-    imageSrc: '/project-3.jpg',
-    title: 'Project 3',
-  },
-]
-
-export default function ProjectsPage() {
   return (
+    <Suspense fallback={<div>Loading projects...</div>}>
     <div>
       <h2 className='text-center py-16'>Projects</h2>
 
@@ -51,5 +18,6 @@ export default function ProjectsPage() {
         <ProjectGrid projects={projects} />
       </div>
     </div>
+    </Suspense>
   )
 }

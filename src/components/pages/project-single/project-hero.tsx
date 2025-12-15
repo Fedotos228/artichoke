@@ -1,4 +1,5 @@
 import paths from '@/lib/utils/paths'
+import { FeaturedMediaWP } from '@/types/wp.types'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 
@@ -7,12 +8,12 @@ export default function ProjectHero({
   thumbnail,
 }: {
   title: string,
-  thumbnail: string
+  thumbnail: FeaturedMediaWP
 }) {
   return (
     <div
       style={{
-        background: `url(${thumbnail}) center center / cover no-repeat`,
+        background: `url(${thumbnail.source_url}) center center / cover no-repeat`,
       }}
       className='w-full'
     >

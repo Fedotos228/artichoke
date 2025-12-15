@@ -1,25 +1,25 @@
-export interface ProjectCardProps {
+import { FeaturedMediaWP, WPRendered } from './wp.types'
+
+export interface WProjectsCard {
   id: number
   slug: string
-  imageSrc: string
-  title: string
+  title: WPRendered
+  featured_media: FeaturedMediaWP
 }
 
-export interface ProjectSingle {
-  id: number
-  slug: string
-  title: string
-  thumbnail: string
-  description: {
-    paragraph: string[],
-    details: {
-      label: string
-      value: string
-    }[]
+export interface WProjectSingle extends WProjectsCard {
+  content: WPRendered,
+  acf: {
+    details: ProjectDetails[]
+    gallery: ProjectGallery[]
   }
-  gallery: {
-    id: number
-    src: string
-    alt: string
-  }[]
+}
+
+export interface ProjectDetails {
+  value: string
+  label: string
+}
+
+export interface ProjectGallery {
+  image: FeaturedMediaWP
 }

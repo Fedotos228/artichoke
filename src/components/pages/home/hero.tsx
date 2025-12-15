@@ -1,34 +1,31 @@
 import HeroContact from '@/components/shared/hero-contact'
-import ProjectGrid from '@/components/shared/project-grid'
-import { ProjectCardProps } from '@/types/projects.type'
+import HeroVideo from '@/components/shared/hero-video'
+import { PhoneHomeACF, SocialsHomeACF } from '@/types/home.types'
+import { WPImages } from '@/types/wp.types'
 
-const heroProjects: ProjectCardProps[] = [
+export default function Hero(
   {
-    id: 1,
-    slug: 'proiect-1',
-    imageSrc: '/hero-img1.png',
-    title: 'Project 1',
-  },
-  {
-    id: 2,
-    slug: 'proiect-2',
-    imageSrc: '/hero-img2.png',
-    title: 'Project 2',
-
-  },
-  {
-    id: 3,
-    slug: 'proiect-3',
-    imageSrc: '/hero-img3.png',
-    title: 'Project 3',
-  },
-]
-
-export default function Hero() {
+    video,
+    phone,
+    email,
+    socials
+  }: {
+    video: WPImages,
+    phone: PhoneHomeACF,
+    email: string,
+    socials: SocialsHomeACF[]
+  }
+) {
   return (
     <section>
-      <ProjectGrid projects={heroProjects} />
-      <HeroContact />
+      <HeroVideo
+        video={video}
+      />
+      <HeroContact
+        socials={socials}
+        phone={phone}
+        email={email}
+      />
     </section>
   )
 }

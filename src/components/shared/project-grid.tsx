@@ -1,11 +1,11 @@
 "use client"
 
-import { ProjectCardProps } from '@/types/projects.type'
+import { WProjectsCard } from '@/types/projects.type'
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
 import ProjectCard from './project-card'
 
-export default function ProjectGrid({ projects }: { projects?: ProjectCardProps[] }) {
+export default function ProjectGrid({ projects }: { projects?: WProjectsCard[] }) {
   const gridRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {

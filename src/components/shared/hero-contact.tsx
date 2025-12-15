@@ -1,42 +1,41 @@
+import { PhoneHomeACF, SocialsHomeACF } from '@/types/home.types'
 import Image from 'next/image'
 import Link from 'next/link'
 import RequestCall from '../forms/request-call'
 
-const socials = [
-  {
-    id: 1,
-    src: '/socials/Instagram.svg',
-    url: 'https://www.instagram.com/artichoke.studio/',
-  },
-  {
-    id: 2,
-    src: '/socials/Whatsapp.svg',
-    url: 'https://t.me/artichoke_studio',
-  },
-  {
-    id: 3,
-    src: '/socials/Telegram.svg',
-    url: 'https://t.me/artichoke_studio',
-  }
-]
 
-export default function HeroContact() {
+export default function HeroContact(
+  {
+    socials,
+    phone,
+    email
+  }:
+    {
+      socials: SocialsHomeACF[],
+      phone: PhoneHomeACF,
+      email: string
+    }
+) {
+  function clearNumber(string: string) {
+    return string.replace(/\D+/g, '').replaceAll('-', '')
+  }
+
   return (
     <div className='py-8 px-8 xl:md:px-[60px] flex items-center justify-between flex-col sm:flex-row gap-6 border border-gray-200'>
       <div className='flex items-center flex-col lg:flex-row gap-6 2xl:gap-[74px] max-w-[890px]'>
         <div className='flex items-center gap-3 xl:gap-6'>
           {socials.map((social) => (
-            <Link key={social.id} href={social.url} target="_blank" rel="noopener noreferrer">
-              <Image src={social.src} alt={`Social icon ${social.id}`} width={40} height={40} />
+            <Link key={social.icon.id} href={social.link.url} target={social.link.target} rel="noopener noreferrer">
+              <Image src={social.icon.source_url} alt={`Social icon ${social.link.title}`} width={40} height={40} />
             </Link>
           ))}
         </div>
 
         <div className='text-center'>
-          <Link href="tel:+373068355155" className='block text-xl xl:text-2xl'>+373 068-355-155</Link>
-          <span className='text-sm'>Daily from 10:00 AM to 8:00 PM</span>
+          <Link href={clearNumber(phone.number)} className='block text-xl xl:text-2xl'>{phone.number}</Link>
+          <span className='text-sm'>{phone.time}</span>
         </div>
-        <Link href='mailto:info@artichoke.studio' className='text-xl xl:text-2xl'>info@artichoke.studio</Link>
+        <Link href={`mailto:${email}`} className='text-xl xl:text-2xl'>{email}</Link>
       </div>
       <RequestCall />
     </div>
