@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/admin/:path*",
+      "destination": "http://artichoke.stellarsolutions.md/wp-admin/:path*"
+    }
+  ]
+}
