@@ -19,14 +19,15 @@ export async function generateStaticParams(): Promise<StaticParamsTypes> {
 export async function generateMetadata(
   { params }: { params: { slug: string } }
 ): Promise<Metadata> {
-  const project = await getSingleProjectMetadata(params.slug)
+  const { slug } = await params
+  const project = await getSingleProjectMetadata(slug)
 
   return {
     title: project.title.rendered,
     description: project.acf.short_description,
     openGraph: {
       title: project.title.rendered,
-      description: project.acf.short_description,
+      description: project.acf.short_description || '',
       images: [project.featured_media.source_url]
     }
   }
