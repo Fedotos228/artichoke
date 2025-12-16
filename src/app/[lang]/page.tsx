@@ -20,16 +20,14 @@ export default async function Home({
 
   return (
     <Suspense fallback={<Loader />}>
-    <div className="">
-        <Hero
-          video={acf.video}
-          phone={acf.phone}
-          email={acf.email}
-          socials={acf.socials}
-        />
-        <About about={acf.about_block} />
-        <HomeProjects projects={acf.home_projects} />
-    </div>
+      <Hero
+        video={acf.video}
+        phone={acf.phone}
+        email={acf.email}
+        socials={acf.socials}
+      />
+      <About about={acf.about_block} />
+      <HomeProjects projects={acf.home_projects} />
     </Suspense>
   )
 }
