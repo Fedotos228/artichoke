@@ -7,11 +7,22 @@ export interface WProjectsCard {
   featured_media: FeaturedMediaWP
 }
 
+export interface WPProjectSEOPromise {
+  title: WPRendered
+  featured_media: {
+    source_url: string
+  }
+  acf: {
+    short_description: string
+  }
+}
+
 export interface WProjectSingle extends WProjectsCard {
   content: WPRendered,
   acf: {
     details: ProjectDetails[]
     gallery: ProjectGallery[]
+    short_description: string
   }
 }
 
@@ -23,3 +34,5 @@ export interface ProjectDetails {
 export interface ProjectGallery {
   image: FeaturedMediaWP
 }
+
+

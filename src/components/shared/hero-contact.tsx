@@ -17,7 +17,7 @@ export default function HeroContact(
     }
 ) {
   function clearNumber(string: string) {
-    return string.replace(/\D+/g, '').replaceAll('-', '')
+    return `+${string.replace(/\D+/g, '').replaceAll('-', '')}`
   }
 
   return (

@@ -5,7 +5,13 @@ import Loader from '@/components/shared/loader'
 import { Locale } from '@/i18n-config'
 import { getDictionary } from '@/lib/utils/get-dictionary'
 import { getHomePage } from '@/services/home.service'
+import { Metadata } from 'next'
 import { Suspense } from 'react'
+
+export const metadata: Metadata = {
+  title: 'Artichoke / Interior Design',
+  description: 'Artichoke Interiors creates personalized interior design concepts for residential and commercial spaces, balancing functionality, emotion, and identity.'
+}
 
 export default async function Home({
   params,

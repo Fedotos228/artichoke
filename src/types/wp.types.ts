@@ -68,27 +68,3 @@ export interface FeaturedMediaWP {
   }
   source_url: string
 }
-
-export interface WPSeo {
-  yoast_head_json: {
-    title: string
-    robots: {
-      index: string
-      follow: string
-      'max-snippet': string
-      'max-image-preview': string
-      'max-video-preview': string
-    }
-    canonical: string
-    og_locale: string
-    og_type: string
-    og_title: string
-    og_url: string
-    og_site_name: string
-    article_modified_time: string
-    twitter_card: string
-    schema: {
-      
-    }
-  }
-}

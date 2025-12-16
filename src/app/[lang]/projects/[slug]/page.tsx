@@ -2,7 +2,9 @@ import ProjectDescription from '@/components/pages/project-single/project-descri
 import ProjectGallery from '@/components/pages/project-single/project-gallery'
 import ProjectHero from '@/components/pages/project-single/project-hero'
 import { wpFetch } from '@/lib/wpClient'
-import { getSingleProject } from '@/services/projects.service'
+import { getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
+import { Metadata } from 'next'
+import Script from 'next/script'
 
 type StaticParamsTypes = Array<{ slug: string }>
 
@@ -12,6 +14,22 @@ export async function generateStaticParams(): Promise<StaticParamsTypes> {
   return posts.map((post) => ({
     slug: post.slug
   }))
+}
+
+export async function generateMetadata(
+  { params }: { params: { slug: string } }
+): Promise<Metadata> {
+  const project = await getSingleProjectMetadata(params.slug)
+
+  return {
+    title: project.title.rendered,
+    description: project.acf.short_description,
+    openGraph: {
+      title: project.title.rendered,
+      description: project.acf.short_description,
+      images: [project.featured_media.source_url]
+    }
+  }
 }
 
 export default async function ProjectSinglePage({
@@ -30,7 +48,8 @@ export default async function ProjectSinglePage({
     content: content,
     acf: {
       details,
-      gallery
+      gallery,
+      short_description
     }
   } = project
 
@@ -41,6 +60,22 @@ export default async function ProjectSinglePage({
         <ProjectDescription content={content} details={details} />
         <ProjectGallery gallery={gallery} />
       </div>
+      <Script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            name: title,
+            description: short_description,
+            image: thumbnail,
+            author: {
+              "@type": "Person",
+              name: "Ivan Railean"
+            }
+          })
+        }}
+      />
     </>
   )
 }

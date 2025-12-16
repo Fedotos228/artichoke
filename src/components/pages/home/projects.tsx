@@ -4,7 +4,6 @@ import paths from '@/lib/utils/paths'
 import { WProjectsCard } from '@/types/projects.type'
 import Link from 'next/link'
 
-
 export default function HomeProjects({ projects }: { projects?: WProjectsCard[] }) {
   return (
     <div className='pb-10 xl:pb-[60px]' id='#projects'>
