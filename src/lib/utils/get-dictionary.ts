@@ -7,6 +7,9 @@ export type WorkTypeOptionType = {
 }
 
 export interface IDictionary {
+  hero: {
+    submit: string
+  }
   contactForm: {
     title: string
     name: string

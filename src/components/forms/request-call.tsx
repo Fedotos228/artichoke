@@ -14,7 +14,11 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { RequestCallFormSchema } from './schemas/request-call.schema'
 
-export default function RequestCall() {
+export default function RequestCall({
+  submit
+}: {
+  submit: string
+}) {
   const form = useForm<z.infer<typeof RequestCallFormSchema>>({
     resolver: zodResolver(RequestCallFormSchema),
     defaultValues: {
@@ -48,7 +52,7 @@ export default function RequestCall() {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{submit}</Button>
         </form>
       </Form>
     </div>

@@ -2,9 +2,12 @@ import { PhoneHomeACF, SocialsHomeACF } from '@/types/home.types'
 import Image from 'next/image'
 import Link from 'next/link'
 import RequestCall from '../forms/request-call'
+import { getDictionary } from '@/lib/utils/get-dictionary'
+import { cookies } from 'next/headers'
+import { Locale } from '@/i18n-config'
 
 
-export default function HeroContact(
+export default async function HeroContact(
   {
     socials,
     phone,
@@ -16,6 +19,9 @@ export default function HeroContact(
       email: string
     }
 ) {
+  const cookieLocale = (await cookies()).get('locale')?.value as Locale
+  const dictionary = await getDictionary(cookieLocale)
+
   function clearNumber(string: string) {
     return `+${string.replace(/\D+/g, '').replaceAll('-', '')}`
   }
@@ -37,7 +43,7 @@ export default function HeroContact(
         </div>
         <Link href={`mailto:${email}`} className='text-xl xl:text-2xl'>{email}</Link>
       </div>
-      <RequestCall />
+      <RequestCall submit={dictionary.hero.submit} />
     </div>
   )
 }

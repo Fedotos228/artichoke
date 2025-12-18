@@ -1,4 +1,7 @@
 {
+  "hero": {
+    "submit": "Trimite"
+  },
   "contactForm": {
     "title": "Să creăm împreună",
     "name": "Numele tău",

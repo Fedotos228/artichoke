@@ -1,4 +1,7 @@
 {
+  "hero": {
+    "submit": "Submit"
+  },
   "contactForm": {
     "title": "Let's create together",
     "name": "Your name",
