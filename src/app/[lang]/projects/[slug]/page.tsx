@@ -1,9 +1,11 @@
 import ProjectDescription from '@/components/pages/project-single/project-description'
 import ProjectGallery from '@/components/pages/project-single/project-gallery'
 import ProjectHero from '@/components/pages/project-single/project-hero'
+import { Locale } from '@/i18n-config'
 import { wpFetch } from '@/lib/wpClient'
 import { getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
 import { Metadata } from 'next'
+import { cookies } from 'next/headers'
 import Script from 'next/script'
 
 type StaticParamsTypes = Array<{ slug: string }>
@@ -39,7 +41,8 @@ export default async function ProjectSinglePage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const project = await getSingleProject(slug)
+  const cookieLocale = (await cookies()).get('locale')?.value as Locale
+  const project = await getSingleProject(slug, cookieLocale)
 
   const {
     title: {

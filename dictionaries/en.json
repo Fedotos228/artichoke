@@ -1,9 +1,25 @@
 {
-  "server-component": {
-    "welcome": "Welcome"
+  "contactForm": {
+    "title": "Let's create together",
+    "name": "Your name",
+    "phone": "Your phone",
+    "type": "Type of work",
+    "message": "Leave your comment",
+    "submit": "Send message",
+    "workType": [
+      { "value": "appartment", "label": "Appartment" },
+      { "value": "house", "label": "House" },
+      { "value": "office", "label": "Office" },
+      { "value": "residence", "label": "Residence" }
+    ]
   },
-  "counter": {
-    "increment": "Increment",
-    "decrement": "Decrement"
+  "header": {
+    "philosophy": "PHILOSOPHY",
+    "ourServices": "OUR SERVICES",
+    "projects": "PROJECTS"
+  },
+  "projects": {
+    "title": "Your space deserves such beauty too",
+    "seeProject": "See all projects"
   }
 }

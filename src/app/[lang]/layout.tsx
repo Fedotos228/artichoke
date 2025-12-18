@@ -4,6 +4,7 @@ import { gilroy } from '@/lib/utils/font'
 import type { Metadata } from "next"
 
 import { i18n, Locale } from '@/i18n-config'
+import { getDictionary } from '@/lib/utils/get-dictionary'
 import "../globals.css"
 
 export const metadata: Metadata = {
@@ -72,13 +73,14 @@ export default async function RootLayout({
 }) {
   const resolved = await params
   const lang = resolved.lang as Locale
+  const dictionary = await getDictionary(lang)
 
   return (
     <html lang={lang}>
       <body
         className={`${gilroy.variable} antialiased`}
       >
-          <Header />
+          <Header dictionary={dictionary} />
           {children}
           <Footer />
       </body>

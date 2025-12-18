@@ -1,11 +1,37 @@
 import type { Locale } from "@/i18n-config"
 import "server-only"
 
-const dictionaries = {
+export type WorkTypeOptionType = {
+  value: string
+  label: string
+}
+
+export interface IDictionary {
+  contactForm: {
+    title: string
+    name: string
+    phone: string
+    type: string
+    message: string
+    submit: string
+    workType: WorkTypeOptionType[]
+  }
+  header: {
+    philosophy: string
+    ourServices: string
+    projects: string
+  }
+  projects: {
+    title: string
+    seeProject: string
+  }
+}
+
+const dictionaries: Record<Locale, () => Promise<IDictionary>> = {
   en: () => import("../../../dictionaries/en.json").then((module) => module.default),
   ro: () => import("../../../dictionaries/ro.json").then((module) => module.default),
   ru: () => import("../../../dictionaries/ru.json").then((module) => module.default),
 };
 
-export const getDictionary = async (locale: Locale) =>
+export const getDictionary = async (locale: Locale): Promise<IDictionary> =>
   dictionaries[locale]?.() ?? dictionaries.en();

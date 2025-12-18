@@ -18,25 +18,14 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select"
+import { IDictionary, WorkTypeOptionType } from '@/lib/utils/get-dictionary'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Textarea } from '../ui/textarea'
 import { ContactFormSchema } from './schemas/contact-form.schema'
 
-type WorkTypeOptionType = {
-  value: string
-  label: string
-}
-
-export const WORK_TYPE_OPTIONS: WorkTypeOptionType[] = [
-  { value: 'appartment', label: 'Appartment' },
-  { value: 'house', label: 'House' },
-  { value: 'office', label: 'Office' },
-  { value: 'residence', label: 'Residence' },
-]
-
-export default function ContactForm() {
+export default function ContactForm({ dictionary }: { dictionary: IDictionary['contactForm'] }) {
   const form = useForm<z.infer<typeof ContactFormSchema>>({
     resolver: zodResolver(ContactFormSchema),
     defaultValues: {
@@ -60,10 +49,10 @@ export default function ContactForm() {
             name="fullname"
             render={({ field }) => (
               <FormItem className='mb-6'>
-                <FormLabel>Your name <span className='text-destructive'>*</span></FormLabel>
+                <FormLabel>{dictionary.name} <span className='text-destructive'>*</span></FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Your name"
+                    placeholder={dictionary.name}
                     type="text"
                     {...field}
                   />
@@ -77,7 +66,7 @@ export default function ContactForm() {
             name="phone"
             render={({ field }) => (
               <FormItem className='mb-6'>
-                <FormLabel>Phone <span className='text-destructive'>*</span></FormLabel>
+                <FormLabel>{dictionary.phone} <span className='text-destructive'>*</span></FormLabel>
                 <FormControl>
                   <Input
                     placeholder="+(373) ___-___-___"
@@ -95,7 +84,7 @@ export default function ContactForm() {
             name="workType"
             render={({ field }) => (
               <FormItem className='mb-6'>
-                <FormLabel>Type of work <span className='text-destructive'>*</span></FormLabel>
+                <FormLabel>{dictionary.type} <span className='text-destructive'>*</span></FormLabel>
                 <FormControl>
                   <Select onValueChange={field.onChange}>
                     <SelectTrigger>
@@ -103,7 +92,8 @@ export default function ContactForm() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {WORK_TYPE_OPTIONS.map((options) => (
+                        {/* @ts-ignore */}
+                        {dictionary.workType.map((options: WorkTypeOptionType) => (
                           <SelectItem key={options.value} value={options.value}>{options.label}</SelectItem>
                         ))}
                       </SelectGroup>
@@ -119,7 +109,7 @@ export default function ContactForm() {
             name="comment"
             render={({ field }) => (
               <FormItem className='mb-6'>
-                <FormLabel>Leave your comment</FormLabel>
+                <FormLabel>{dictionary.message}</FormLabel>
                 <FormControl>
                   <Textarea placeholder="Preferences, budget, etc..." {...field} />
                 </FormControl>
@@ -127,7 +117,7 @@ export default function ContactForm() {
               </FormItem>
             )}
           />
-          <Button variant='white' type="submit" className='mx-auto md:max-w-full'>Send message</Button>
+          <Button variant='white' type="submit" className='mx-auto md:max-w-full'>{dictionary.submit}</Button>
         </form>
       </Form>
     </div>

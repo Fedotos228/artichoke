@@ -1,12 +1,17 @@
 'use client'
 
+import { IDictionary } from '@/lib/utils/get-dictionary'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Languages from './languages'
 
-export default function Header() {
+export default function Header({
+  dictionary,
+}: {
+  dictionary: IDictionary
+}) {
   const [currentSection, setCurrentSection] = useState<string>('')
   const pathname = usePathname()
 
@@ -38,13 +43,13 @@ export default function Header() {
               className='navItem'
               onClick={() => handleCurrentSection('#philosophy')}
             >
-              PHILOSOPHY
+              {dictionary['header'].philosophy}
             </button>
             <button
               className='navItem'
               onClick={() => handleCurrentSection('#services')}
             >
-              OUR SERVICES
+              {dictionary['header'].ourServices}
             </button>
             <Link href="/" className='h-40 w-40 flex items-center justify-center'>
               <Image
@@ -55,7 +60,7 @@ export default function Header() {
               />
             </Link>
             <button className='navItem' onClick={() => handleCurrentSection('#projects')}>
-              PROJECTS
+              {dictionary['header'].projects}
             </button>
             <Languages />
           </div>

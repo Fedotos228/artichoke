@@ -23,3 +23,8 @@ export interface FooterVideo {
   width: number
   height: number
 }
+
+export interface FooterSettings {
+  video: FooterVideo
+  copyright: string
+}

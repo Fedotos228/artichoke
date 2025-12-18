@@ -1,9 +1,25 @@
 {
-  "server-component": {
-    "welcome": "добро пожаловать"
+  "contactForm": {
+    "title": "Создадим вместе",
+    "name": "Ваше имя",
+    "phone": "Ваш телефон",
+    "type": "Тип работы",
+    "message": "Оставьте комментарий",
+    "submit": "Отправить сообщение",
+    "workType": [
+      { "value": "appartment", "label": "Квартира" },
+      { "value": "house", "label": "Дом" },
+      { "value": "office", "label": "Офис" },
+      { "value": "residence", "label": "Резиденция" }
+    ]
   },
-  "counter": {
-    "increment": "Добавить",
-    "decrement": "Убрать"
+  "header": {
+    "philosophy": "ФИЛОСОФИЯ",
+    "ourServices": "НАШИ УСЛУГИ",
+    "projects": "ПРОЕКТЫ"
+  },
+  "projects": {
+    "title": "Ваше пространство заслуживает такой красоты тоже",
+    "seeProject": "Смотреть все проекты"
   }
 }

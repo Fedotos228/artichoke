@@ -1,9 +1,25 @@
 {
-  "server-component": {
-    "welcome": "Bun venit"
+  "contactForm": {
+    "title": "Să creăm împreună",
+    "name": "Numele tău",
+    "phone": "Telefonul tău",
+    "type": "Tipul de lucru",
+    "message": "Lasă un mesaj",
+    "submit": "Trimite mesajul",
+    "workType": [
+      { "value": "appartment", "label": "Appartment" },
+      { "value": "house", "label": "Casă" },
+      { "value": "office", "label": "Oficiu" },
+      { "value": "residence", "label": "Residență" }
+    ]
   },
-  "counter": {
-    "increment": "Crește",
-    "decrement": "Scadeză"
+  "header": {
+    "philosophy": "FILOSOFIA",
+    "ourServices": "SERVICIILE NOASTRE",
+    "projects": "PROIECTE"
+  },
+  "projects": {
+    "title": "Spațiul tău merită această frumusețe",
+    "seeProject": "Vezi toate proiectele"
   }
 }
