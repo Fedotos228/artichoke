@@ -2,15 +2,15 @@ import ProjectDescription from '@/components/pages/project-single/project-descri
 import ProjectGallery from '@/components/pages/project-single/project-gallery'
 import ProjectHero from '@/components/pages/project-single/project-hero'
 import { Locale } from '@/i18n-config'
-import { getProjectsSlug, getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
+import { getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
 import { ProjectSlugTypes } from '@/types/projects.type'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import Script from 'next/script'
 
 
-export async function generateStaticParams(): Promise<ProjectSlugTypes> {
-  const projects = await fetch(`${process.env.WP_URL}/projects?_fields=slug`).then(res => res.json()) as ProjectSlugTypes
+export async function generateStaticParams() {
+  const projects = await fetch(`${process.env.WP_URL}/projects?_fields=slug&lang=en`).then(res => res.json()) as ProjectSlugTypes
 
   return projects.map((post) => ({
     slug: post.slug
