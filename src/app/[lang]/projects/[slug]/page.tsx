@@ -10,7 +10,7 @@ import Script from 'next/script'
 
 
 export async function generateStaticParams(): Promise<ProjectSlugTypes> {
-  const projects = await getProjectsSlug()
+  const projects = await fetch(`${process.env.WP_URL}/projects?_fields=slug`).then(res => res.json()) as ProjectSlugTypes
 
   return projects.map((post) => ({
     slug: post.slug
