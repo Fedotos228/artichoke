@@ -69,7 +69,7 @@ export default function Header({
             <div className='flex flex-1' />
             <Link href="/" className='h-40 w-40 flex items-center justify-center'>
               <Image
-                src="../../Logo.svg"
+                src="../../artichoke-logo.svg"
                 alt='Artichoke Logo'
                 width={120}
                 height={100}
