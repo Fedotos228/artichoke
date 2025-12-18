@@ -2,18 +2,17 @@ import ProjectDescription from '@/components/pages/project-single/project-descri
 import ProjectGallery from '@/components/pages/project-single/project-gallery'
 import ProjectHero from '@/components/pages/project-single/project-hero'
 import { Locale } from '@/i18n-config'
-import { wpFetch } from '@/lib/wpClient'
-import { getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
+import { getProjectsSlug, getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
+import { ProjectSlugTypes } from '@/types/projects.type'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import Script from 'next/script'
 
-type StaticParamsTypes = Array<{ slug: string }>
 
-export async function generateStaticParams(): Promise<StaticParamsTypes> {
-  const posts = await wpFetch<StaticParamsTypes>('/projects?_fields=slug')
+export async function generateStaticParams(): Promise<ProjectSlugTypes> {
+  const projects = await getProjectsSlug()
 
-  return posts.map((post) => ({
+  return projects.map((post) => ({
     slug: post.slug
   }))
 }

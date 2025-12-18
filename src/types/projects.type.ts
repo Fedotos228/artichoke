@@ -35,4 +35,4 @@ export interface ProjectGallery {
   image: FeaturedMediaWP
 }
 
-
+export type ProjectSlugTypes = Array<{ slug: string }>

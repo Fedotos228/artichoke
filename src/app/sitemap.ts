@@ -1,8 +1,8 @@
+import { getProjectsSlug } from '@/services/projects.service'
 import { MetadataRoute } from 'next'
-import { wpFetch } from '../lib/wpClient'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const projects = await wpFetch<Array<{ slug: string }>>('/projects?_fields=slug')
+  const projects = await getProjectsSlug()
 
   const siteURL = process.env.SITE_URL as string
 

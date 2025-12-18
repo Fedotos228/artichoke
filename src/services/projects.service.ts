@@ -1,6 +1,6 @@
 import { Locale } from '@/i18n-config'
 import { wpFetch } from '@/lib/wpClient'
-import { WPProjectSEOPromise, WProjectsCard, WProjectSingle } from '@/types/projects.type'
+import { ProjectSlugTypes, WPProjectSEOPromise, WProjectsCard, WProjectSingle } from '@/types/projects.type'
 
 async function getAllProjects(lang: Locale): Promise<WProjectsCard[]> {
   const res = await wpFetch<WProjectsCard[]>('/projects?_fields=id,slug,title,featured_media', {}, undefined, lang)
@@ -28,4 +28,13 @@ async function getSingleProjectMetadata(slug: string): Promise<WPProjectSEOPromi
   return project
 }
 
-export { getAllProjects, getSingleProject, getSingleProjectMetadata }
+async function getProjectsSlug(): Promise<ProjectSlugTypes> {
+  const res = await wpFetch<ProjectSlugTypes>(`/projects?_fields=slug`)
+
+  if (!res || res.length === 0) throw new Error('Project slug not found')
+
+  return res
+}
+
+export { getAllProjects, getProjectsSlug, getSingleProject, getSingleProjectMetadata }
+
