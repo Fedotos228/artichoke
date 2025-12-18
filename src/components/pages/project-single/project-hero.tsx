@@ -6,9 +6,11 @@ import Link from 'next/link'
 export default function ProjectHero({
   title,
   thumbnail,
+  back
 }: {
   title: string,
-  thumbnail: FeaturedMediaWP
+  thumbnail: FeaturedMediaWP,
+  back: string
 }) {
   return (
     <div
@@ -22,7 +24,7 @@ export default function ProjectHero({
 
         <Link href={paths.projects()} className='inline-flex items-center gap-3 text-background uppercase font-medium mt-6 group hover:underline'>
           <ChevronLeft size={24} className='inline-block group-hover:-translate-x-1 transition duration-75' />
-          Back to Projects
+          {back}
         </Link>
       </div>
     </div>

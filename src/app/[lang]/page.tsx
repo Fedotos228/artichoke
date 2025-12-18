@@ -28,7 +28,7 @@ export default async function Home() {
         socials={acf.socials}
       />
       <About about={acf.about_block} />
-      <HomeProjects projects={acf.home_projects} />
+      <HomeProjects projects={acf.home_projects} title={acf.title} />
     </Suspense>
   )
 }

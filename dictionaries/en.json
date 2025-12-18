@@ -22,7 +22,9 @@
     "projects": "PROJECTS"
   },
   "projects": {
-    "title": "Your space deserves such beauty too",
-    "seeProject": "See all projects"
+    "title": "Projects",
+    "seeProject": "See all projects",
+    "back": "Back to projects",
+    "about": "About the project"
   }
 }

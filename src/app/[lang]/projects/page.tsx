@@ -1,5 +1,7 @@
+import Loader from '@/components/shared/loader'
 import ProjectGrid from '@/components/shared/project-grid'
 import { Locale } from '@/i18n-config'
+import { getDictionary } from '@/lib/utils/get-dictionary'
 import { getAllProjects } from '@/services/projects.service'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
@@ -14,11 +16,12 @@ export const metadata: Metadata = {
 export default async function ProjectsPage() {
   const cookieLocale = (await cookies()).get('locale')?.value as Locale
   const projects = await getAllProjects(cookieLocale)
+  const dictionary = await getDictionary(cookieLocale)
 
   return (
-    <Suspense fallback={<div>Loading projects...</div>}>
+    <Suspense fallback={<Loader />}>
     <div>
-      <h2 className='text-center py-16'>Projects</h2>
+      <h2 className='text-center py-16'>{dictionary.projects.title}</h2>
 
       <div className='mb-0.5'>
         <ProjectGrid projects={projects} />

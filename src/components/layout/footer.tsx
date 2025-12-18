@@ -5,8 +5,8 @@ import { cookies } from 'next/headers'
 import ContactForm from '../forms/contact-form'
 
 export default async function Footer() {
-  const footer = await getFooterSettings()
   const lang = (await cookies()).get('locale')?.value as Locale
+  const footer = await getFooterSettings(lang)
 
   const dictionary = await getDictionary(lang)
 

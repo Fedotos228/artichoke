@@ -2,6 +2,7 @@ import ProjectDescription from '@/components/pages/project-single/project-descri
 import ProjectGallery from '@/components/pages/project-single/project-gallery'
 import ProjectHero from '@/components/pages/project-single/project-hero'
 import { Locale } from '@/i18n-config'
+import { getDictionary } from '@/lib/utils/get-dictionary'
 import { getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
 import { ProjectSlugTypes } from '@/types/projects.type'
 import { Metadata } from 'next'
@@ -42,6 +43,7 @@ export default async function ProjectSinglePage({
   const { slug } = await params
   const cookieLocale = (await cookies()).get('locale')?.value as Locale
   const project = await getSingleProject(slug, cookieLocale)
+  const dictionary = await getDictionary(cookieLocale)
 
   const {
     title: {
@@ -58,9 +60,9 @@ export default async function ProjectSinglePage({
 
   return (
     <>
-      <ProjectHero title={title} thumbnail={thumbnail} />
+      <ProjectHero title={title} thumbnail={thumbnail} back={dictionary.projects.back} />
       <div className='max-w-[1194px] mx-auto px-4 py-20'>
-        <ProjectDescription content={content} details={details} />
+        <ProjectDescription content={content} details={details} text={dictionary.projects.about} />
         <ProjectGallery gallery={gallery} />
       </div>
       <Script

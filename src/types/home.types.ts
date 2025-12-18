@@ -15,6 +15,7 @@ export interface HomeACF {
   email: string
   video: WPImages
   home_projects: WProjectsCard[]
+  title: string
 }
 
 export interface AboutHomeACF {

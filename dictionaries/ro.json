@@ -22,7 +22,9 @@
     "projects": "PROIECTE"
   },
   "projects": {
-    "title": "Spațiul tău merită această frumusețe",
-    "seeProject": "Vezi toate proiectele"
+    "title": "Proiecte",
+    "seeProject": "Vezi toate proiectele",
+    "back": "Înapoi la proiecte",
+    "about": "Despre proiect"
   }
 }

@@ -26,7 +26,9 @@ export interface IDictionary {
   }
   projects: {
     title: string
-    seeProject: string
+    seeProject: string,
+    back: string,
+    about: string
   }
 }
 

@@ -3,14 +3,16 @@ import { WPRendered } from '@/types/wp.types'
 
 export default function ProjectDescription({ 
   content, 
-  details 
+  details,
+  text
 }: {
   content: WPRendered,
   details: ProjectDetails[]
+  text: string
 }) {
   return (
     <div>
-      <h3>About the project</h3>
+      <h3>{text}</h3>
       <div className='grid grid-cols-2 mb-20'>
         <div>
           <div dangerouslySetInnerHTML={{ __html: content.rendered }} />
