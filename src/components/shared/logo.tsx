@@ -8,12 +8,14 @@ export default function Logo({
 }: {
   version?: LogoVersion
 }) {
+  let logoPath = '/artichoke-logo.svg'
+
   return (
     <>
       {version === 'desktop' && (
         <Link href="/" className='h-35 w-35 2xl:h-40 2xl:w-40 flex items-center justify-center'>
           <Image
-            src="../../Logo.svg"
+            src={logoPath}
             alt='Artichoke Logo'
             width={120}
             height={100}
@@ -24,7 +26,7 @@ export default function Logo({
       {version === 'mobile' && (
         <Link href="/" className='flex items-center justify-center'>
           <Image
-            src="../../Logo.svg"
+            src={logoPath}
             alt='Artichoke Logo'
             width={100}
             height={80}

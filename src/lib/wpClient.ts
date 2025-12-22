@@ -1,4 +1,3 @@
-
 import type { Locale } from '@/i18n-config'
 
 const WP_BASE_URL = process.env.WP_URL as string
