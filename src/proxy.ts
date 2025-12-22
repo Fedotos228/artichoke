@@ -46,6 +46,7 @@ export function proxy(request: NextRequest) {
   if (pathname.startsWith('/socials/') || pathname === '/socials') return
   if (pathname === '/favicon.ico' || pathname === '/manifest.json') return
   if (pathname === '/sitemap.xml') return
+  if (pathname === '/admin') return
 
   // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
   // // If you have one
