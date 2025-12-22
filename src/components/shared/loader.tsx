@@ -14,7 +14,7 @@ export default function Loader() {
   return (
     <div className='absolute inset-0 w-full h-full bg-background flex items-center justify-center z-50'>
       <Image
-        src="/artichoke-logo.svg"
+        src="/artichokes-logo.svg"
         alt="Loading logo"
         width={160}
         height={160}

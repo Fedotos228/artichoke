@@ -62,27 +62,29 @@ export default async function ProjectSinglePage({
 
   return (
     <Suspense fallback={<Loader />}>
-      <ProjectHero title={title} thumbnail={thumbnail} back={dictionary.projects.back} />
-      <div className='max-w-[1194px] mx-auto px-4 py-20'>
-        <ProjectDescription content={content} details={details} text={dictionary.projects.about} />
-        <ProjectGallery gallery={gallery} />
-      </div>
-      <Script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "CreativeWork",
-            name: title,
-            description: short_description,
-            image: thumbnail,
-            author: {
-              "@type": "Person",
-              name: "Ivan Railean"
-            }
-          })
-        }}
-      />
+      <main>
+        <ProjectHero title={title} thumbnail={thumbnail} back={dictionary.projects.back} />
+        <div className='max-w-[1194px] mx-auto px-4 py-20'>
+          <ProjectDescription content={content} details={details} text={dictionary.projects.about} />
+          <ProjectGallery gallery={gallery} />
+        </div>
+        <Script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CreativeWork",
+              name: title,
+              description: short_description,
+              image: thumbnail,
+              author: {
+                "@type": "Person",
+                name: "Ivan Railean"
+              }
+            })
+          }}
+        />
+      </main>
     </Suspense>
   )
 }

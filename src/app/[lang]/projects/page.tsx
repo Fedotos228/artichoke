@@ -20,13 +20,13 @@ export default async function ProjectsPage() {
 
   return (
     <Suspense fallback={<Loader />}>
-    <div>
+    <main>
       <h2 className='text-center py-16'>{dictionary.projects.title}</h2>
 
       <div className='mb-0.5'>
         <ProjectGrid projects={projects} />
       </div>
-    </div>
+    </main>
     </Suspense>
   )
 }
