@@ -7,11 +7,10 @@ import ContactForm from '../forms/contact-form'
 export default async function Footer() {
   const lang = (await cookies()).get('locale')?.value as Locale
   const footer = await getFooterSettings(lang)
-
   const dictionary = await getDictionary(lang)
 
   return (
-    <footer className=''>
+    <footer>
       <div className='grid md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_639px] gap-0.5'>
         <video loop autoPlay muted controls={false} className='h-full w-full object-cover'>
           <source src={footer.video.url} type={footer.video.mime_type} />

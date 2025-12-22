@@ -5,7 +5,11 @@ import gsap from 'gsap'
 import Image from 'next/image'
 import { useEffect, useRef } from 'react'
 
-export default function About({ about }: { about?: AboutHomeACF[] }) {
+export default function About({
+  about
+}: {
+  about?: AboutHomeACF[]
+}) {
   if (!about) return null
 
   const rootRef = useRef<HTMLElement | null>(null)
@@ -33,7 +37,6 @@ export default function About({ about }: { about?: AboutHomeACF[] }) {
       })
     }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' })
 
-    // Prepare blocks and observe
     blocks.forEach((b) => {
       gsap.set(b, { opacity: 0, y: 88 })
       observer.observe(b)

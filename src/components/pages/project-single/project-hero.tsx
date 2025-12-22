@@ -19,7 +19,7 @@ export default function ProjectHero({
       }}
       className='w-full'
     >
-      <div className='flex justify-center h-dvh flex-col max-w-[1194px] 2xl:max-w-[1360px] mx-auto'>
+      <div className='flex justify-center h-dvh flex-col max-w-[1194px] px-4 lg:px-0 2xl:max-w-[1360px] mx-auto'>
         <h1 className='text-background'>{title}</h1>
 
         <Link href={paths.projects()} className='inline-flex items-center gap-3 text-background uppercase font-medium mt-6 group hover:underline'>

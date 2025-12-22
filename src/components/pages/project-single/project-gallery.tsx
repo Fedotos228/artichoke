@@ -33,7 +33,7 @@ export default function ProjectGallery({ gallery }: { gallery?: ProjectGalleryTy
             alt={image.alt_text || `Gallery image ${index + 1}`}
             width={650}
             height={740}
-            className='w-full h-auto object-cover'
+            className='w-full h-full object-cover'
           />
         </Link>
       ))}
