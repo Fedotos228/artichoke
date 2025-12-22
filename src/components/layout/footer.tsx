@@ -13,7 +13,7 @@ export default async function Footer() {
   return (
     <footer className=''>
       <div className='grid md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_639px] gap-0.5'>
-        <video loop autoPlay muted className='h-full w-full object-cover'>
+        <video loop autoPlay muted controls={false} className='h-full w-full object-cover'>
           <source src={footer.video.url} type={footer.video.mime_type} />
         </video>
 
