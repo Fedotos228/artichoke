@@ -30,6 +30,8 @@ export default function Header({
       behavior: 'smooth',
     })
 
+    setCurrentSection('')
+
   }, [currentSection])
 
   return (

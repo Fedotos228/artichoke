@@ -1,24 +1,21 @@
+import { Locale } from '@/i18n-config'
+import { getDictionary } from '@/lib/utils/get-dictionary'
 import { PhoneHomeACF, SocialsHomeACF } from '@/types/home.types'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 import RequestCall from '../forms/request-call'
-import { getDictionary } from '@/lib/utils/get-dictionary'
-import { cookies } from 'next/headers'
-import { Locale } from '@/i18n-config'
 
 
-export default async function HeroContact(
-  {
-    socials,
-    phone,
-    email
-  }:
-    {
-      socials: SocialsHomeACF[],
-      phone: PhoneHomeACF,
-      email: string
-    }
-) {
+export default async function HeroContact({
+  socials,
+  phone,
+  email
+}: {
+  socials: SocialsHomeACF[],
+  phone: PhoneHomeACF,
+  email: string
+}) {
   const cookieLocale = (await cookies()).get('locale')?.value as Locale
   const dictionary = await getDictionary(cookieLocale)
 
