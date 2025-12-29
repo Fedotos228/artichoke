@@ -82,9 +82,13 @@ export default async function RootLayout({
       <body
         className={`${gilroy.variable} antialiased`}
       >
+        <div className="wrapper">
           <Header dictionary={dictionary} />
-          {children}
+          <main>
+            {children}
+          </main>
           <Footer />
+        </div>
       </body>
     </html>
   )
