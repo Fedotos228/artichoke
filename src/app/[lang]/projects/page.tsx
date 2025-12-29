@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   description: 'Explore our interior design portfolio featuring residential and commercial projects defined by balance, functionality, and refined aesthetics.'
 }
 
-
 export default async function ProjectsPage() {
   const cookieLocale = (await cookies()).get('locale')?.value as Locale
   const projects = await getAllProjects(cookieLocale)
