@@ -30,6 +30,7 @@ export interface IDictionary {
     back: string,
     about: string
   }
+  reqCall: string,
 }
 
 const dictionaries: Record<Locale, () => Promise<IDictionary>> = {

@@ -14,6 +14,7 @@ export interface HomeACF {
   phone: PhoneHomeACF
   email: string
   video: WPImages
+  poster: WPImages
   home_projects: WProjectsCard[]
   title: string
 }

@@ -3,7 +3,7 @@
     "submit": "Submit"
   },
   "contactForm": {
-    "title": "Let's create together",
+    "title": "Let’s discuss your space",
     "name": "Your name",
     "phone": "Your phone",
     "type": "Type of work",
@@ -23,8 +23,9 @@
   },
   "projects": {
     "title": "Projects",
-    "seeProject": "See all projects",
+    "seeProject": "Explore our work",
     "back": "Back to projects",
     "about": "About the project"
-  }
+  },
+  "reqCall": "Enter your phone number..."
 }

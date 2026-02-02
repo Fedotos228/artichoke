@@ -40,7 +40,7 @@ export default async function HeroContact({
         </div>
         <Link href={`mailto:${email}`} className='text-xl xl:text-2xl'>{email}</Link>
       </div>
-      <RequestCall submit={dictionary.hero.submit} />
+      <RequestCall submit={dictionary.hero.submit} reqCall={dictionary.reqCall} />
     </div>
   )
 }

@@ -1,68 +1,12 @@
 import Footer from '@/components/layout/footer'
 import Header from '@/components/layout/header/header'
 import { gilroy } from '@/lib/utils/font'
-import type { Metadata } from "next"
 
 import Loader from '@/components/shared/loader'
 import { i18n, Locale } from '@/i18n-config'
 import { getDictionary } from '@/lib/utils/get-dictionary'
 import { Suspense } from 'react'
 import "../globals.css"
-
-export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://artichoke.com'),
-  title: {
-    default: 'Artichoke Studio',
-    template: "%s | Artichoke"
-  },
-  description: "Artichoke Interiors is an interior design studio creating personalized residential and commercial spaces focused on harmony, functionality, and emotional comfort.",
-  openGraph: {
-    siteName: 'Artichoke',
-    url: process.env.SITE_URL || 'https://artichoke.com',
-    type: 'website',
-    title: 'Artichoke',
-    locale: 'en_US',
-    description: 'Artichoke Interiors is an interior design studio creating personalized residential and commercial spaces focused on harmony, functionality, and emotional comfort.',
-    images: [
-      {
-        url: '/artichoke-logo.svg',
-        width: 1200,
-        height: 630,
-        alt: 'Artichoke',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Artichoke',
-    description: 'Artichoke Interiors is an interior design studio creating personalized residential and commercial spaces focused on harmony, functionality, and emotional comfort.',
-    images: ['/artichoke-logo.svg'],
-  },
-  keywords: [
-    'IR INTERIORS STUDIO',
-    'IR INTERIORS ',
-    'IR STUDIO',
-    'Ivan Railean',
-    'IVAN RAILEAN',
-    'Artichoke',
-    'Artichoke Studio',
-    'Artichoke Interiors',
-    'interior design',
-    'interior design studio',
-    'interior design firm',
-    'interior design company',
-    'interior design agency',
-    'interior design services',
-    'modern interior design',
-    'custom interior design',
-    'residential interior design',
-    'commercial interior design'
-  ],
-  robots: {
-    index: true,
-    follow: true
-  }
-}
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }))

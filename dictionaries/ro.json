@@ -3,7 +3,7 @@
     "submit": "Trimite"
   },
   "contactForm": {
-    "title": "Să creăm împreună",
+    "title": "Hai să discutăm despre spațiul tău.",
     "name": "Numele tău",
     "phone": "Telefonul tău",
     "type": "Tipul de lucru",
@@ -23,8 +23,9 @@
   },
   "projects": {
     "title": "Proiecte",
-    "seeProject": "Vezi toate proiectele",
+    "seeProject": "Descoperă lucrările noastre",
     "back": "Înapoi la proiecte",
     "about": "Despre proiect"
-  }
+  },
+  "reqCall": "Introdu numărul..."
 }

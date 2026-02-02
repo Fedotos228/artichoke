@@ -6,11 +6,13 @@ import { WPImages } from '@/types/wp.types'
 export default function Hero(
   {
     video,
+    poster,
     phone,
     email,
     socials
   }: {
     video: WPImages,
+    poster: WPImages,
     phone: PhoneHomeACF,
     email: string,
     socials: SocialsHomeACF[]
@@ -20,6 +22,7 @@ export default function Hero(
     <section>
       <HeroVideo
         video={video}
+        poster={poster}
       />
       <HeroContact
         socials={socials}
