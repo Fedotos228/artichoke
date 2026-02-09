@@ -37,17 +37,22 @@ export default function RequestCall({
     },
   })
 
+  console.log("Host SMTP:", process.env.EMAIL_SERVER_HOST)
+  console.log("User SMTP:", process.env.EMAIL_SERVER_USER)
+
   async function onSubmit(data: z.infer<typeof ExtendedSchema>) {
     setIsLoading(true)
 
-    try {
-      const result = await sendCallRequest(data.phone)
+    console.log(data)
 
-      if (result.success) {
+    setIsLoading(false)
+
+    try {
+      const result = await sendCallRequest(data)
+
+      if (result) {
         alert('Cerere trimisă cu succes!')
         form.reset()
-      } else {
-        alert('Eroare: ' + result.error)
       }
 
     } catch (error) {
@@ -82,6 +87,7 @@ export default function RequestCall({
                       onChange={field.onChange}
                       international
                       withCountryCallingCode
+                      autoComplete='true'
                       className='h-10 w-full'
                     />
                   </div>

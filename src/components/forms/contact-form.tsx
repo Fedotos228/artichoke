@@ -1,5 +1,6 @@
 'use client'
 
+import { sendContact } from '@/app/actions/contact'
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -20,12 +21,14 @@ import {
 } from "@/components/ui/select"
 import { IDictionary, WorkTypeOptionType } from '@/lib/utils/get-dictionary'
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from 'react'
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Textarea } from '../ui/textarea'
 import { ContactFormSchema } from './schemas/contact-form.schema'
 
 export default function ContactForm({ dictionary }: { dictionary: IDictionary['contactForm'] }) {
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const form = useForm<z.infer<typeof ContactFormSchema>>({
     resolver: zodResolver(ContactFormSchema),
     defaultValues: {
@@ -36,8 +39,26 @@ export default function ContactForm({ dictionary }: { dictionary: IDictionary['c
     },
   })
 
-  function onSubmit(data: z.infer<typeof ContactFormSchema>) {
-    console.log(data)
+  async function onSubmit(data: z.infer<typeof ContactFormSchema>) {
+    setIsLoading(true)
+
+
+    setIsLoading(false)
+
+    try {
+      const result = await sendContact(data)
+
+      if (result) {
+        alert('Cerere trimisă cu succes!')
+        form.reset()
+      }
+
+    } catch (error) {
+      console.error(error)
+      alert('A apărut o eroare neașteptată.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
