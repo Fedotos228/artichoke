@@ -77,6 +77,7 @@ export default async function Home() {
         phone={acf.phone}
         email={acf.email}
         socials={acf.socials}
+        slogan={acf.slogan}
       />
       <About about={acf.about_block} />
       <HomeProjects projects={acf.home_projects} title={acf.title} />

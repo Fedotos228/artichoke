@@ -16,7 +16,8 @@ export interface HomeACF {
   video: WPImages
   poster: WPImages
   home_projects: WProjectsCard[]
-  title: string
+  title: string,
+  slogan: string
 }
 
 export interface AboutHomeACF {

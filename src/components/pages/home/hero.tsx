@@ -9,13 +9,15 @@ export default function Hero(
     poster,
     phone,
     email,
-    socials
+    socials,
+    slogan
   }: {
     video: WPImages,
     poster: WPImages,
     phone: PhoneHomeACF,
     email: string,
-    socials: SocialsHomeACF[]
+    socials: SocialsHomeACF[],
+    slogan: string
   }
 ) {
   return (
@@ -23,6 +25,7 @@ export default function Hero(
       <HeroVideo
         video={video}
         poster={poster}
+        slogan={slogan}
       />
       <HeroContact
         socials={socials}

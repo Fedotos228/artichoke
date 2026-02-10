@@ -4,9 +4,9 @@ import { WPImages } from '@/types/wp.types'
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
 
-export default function HeroVideo({ video, poster }: { video: WPImages, poster: WPImages }) {
+export default function HeroVideo({ video, poster, slogan }: { video: WPImages, poster: WPImages, slogan: string }) {
   const containerRef = useRef<HTMLHeadingElement | null>(null)
-  const text = "timeless interior architecture"
+  const text = slogan
 
   useEffect(() => {
     // Selectăm toate span-urile (cuvintele) din interiorul h2
