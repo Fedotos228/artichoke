@@ -43,16 +43,16 @@ export default function HeroVideo({ video, poster }: { video: WPImages, poster: 
       
       <div className='absolute inset-0 w-full h-full bg-foreground/40 z-10' />
       
-      <h2
+      <div
         ref={containerRef} 
-        className='absolute text-2xl md:text-2xl lg:text-4xl z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-background w-full'
+        className='absolute text-[48px] xl:text-[52px] leading-[160%] z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-background w-full'
       >
         {text.split(' ').map((word, i) => (
-          <span key={i} className="word inline-block mr-2">
+          <span key={i} className="word inline-block mr-2 ">
             {word}
           </span>
         ))}
-      </h2>
+      </div>
     </div>
   )
 }

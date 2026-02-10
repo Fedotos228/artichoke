@@ -37,13 +37,9 @@ export default function RequestCall({
     },
   })
 
-  console.log("Host SMTP:", process.env.EMAIL_SERVER_HOST)
-  console.log("User SMTP:", process.env.EMAIL_SERVER_USER)
 
   async function onSubmit(data: z.infer<typeof ExtendedSchema>) {
     setIsLoading(true)
-
-    console.log(data)
 
     setIsLoading(false)
 
