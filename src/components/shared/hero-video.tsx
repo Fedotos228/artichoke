@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react'
 
 export default function HeroVideo({ video, poster }: { video: WPImages, poster: WPImages }) {
   const containerRef = useRef<HTMLHeadingElement | null>(null)
-  const text = "Timeless interior architecture"
+  const text = "timeless interior architecture"
 
   useEffect(() => {
     // Selectăm toate span-urile (cuvintele) din interiorul h2
