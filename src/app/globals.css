@@ -99,7 +99,7 @@ body {
 
 @layer ui {
   h1 {
-    @apply font-medium text-4xl md:text-5xl lg:text-[64px] leading-[130%] lg:leading-[160%] tracking-[10%] uppercase;
+    @apply font-medium text-4xl md:text-5xl lg:text-[64px] leading-0.5 md:leading-[130%] lg:leading-[160%] tracking-[10%] uppercase;
   }
 
   h2 {

@@ -24,7 +24,7 @@ export default async function HeroContact({
   }
 
   return (
-    <div className='py-8 px-8 xl:md:px-[60px] flex items-center justify-between flex-col sm:flex-row gap-6 border border-gray-200'>
+    <div className='px-3 py-8 md:px-8 xl:md:px-[60px] flex items-center justify-between flex-col sm:flex-row gap-6 border border-gray-200'>
       <div className='flex items-center flex-col lg:flex-row gap-6 2xl:gap-[74px] max-w-[890px]'>
         <div className='flex items-center gap-3 xl:gap-6'>
           {socials.map((social) => (
@@ -38,7 +38,7 @@ export default async function HeroContact({
           <Link href={clearNumber(phone.number)} className='block text-xl xl:text-2xl'>{phone.number}</Link>
           <span className='text-sm'>{phone.time}</span>
         </div>
-        <Link href={`mailto:${email}`} className='text-xl xl:text-2xl'>{email}</Link>
+        <Link href={`mailto:${email}`} className='text-center text-xl xl:text-2xl'>{email}</Link>
       </div>
       <RequestCall submit={dictionary.hero.submit} reqCall={dictionary.reqCall} />
     </div>
