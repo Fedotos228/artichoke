@@ -13,7 +13,7 @@ export default async function HomeProjects({ projects, title }: { projects?: WPr
 
   return (
     <div className='pb-10 xl:pb-[60px]' id='#projects'>
-      <h2 className='text-center mb-14' dangerouslySetInnerHTML={{ __html: title}} />
+      <h2 className='text-center mb-14 py-3' dangerouslySetInnerHTML={{ __html: title}} />
 
       <ProjectGrid projects={projects} />
 
