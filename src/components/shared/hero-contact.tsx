@@ -37,7 +37,7 @@ export default async function HeroContact({
 
         <div className='text-center'>
           {phone?.numbers.map((item, i) => (
-            <Link key={i} href={clearNumber(item.number)} className='block text-xl xl:text-2xl'>{item.number}</Link>
+            <Link key={i} href={clearNumber(item.number) || '#'} className='block text-xl xl:text-2xl'>{item.number}</Link>
           ))}
           <span className='text-sm'>{phone.time}</span>
         </div>
