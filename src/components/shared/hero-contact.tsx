@@ -20,6 +20,7 @@ export default async function HeroContact({
   const dictionary = await getDictionary(cookieLocale)
 
   function clearNumber(string: string) {
+    if (!string) return null
     return `+${string.replace(/\D+/g, '').replaceAll('-', '')}`
   }
 
@@ -35,7 +36,9 @@ export default async function HeroContact({
         </div>
 
         <div className='text-center'>
-          <Link href={clearNumber(phone.number)} className='block text-xl xl:text-2xl'>{phone.number}</Link>
+          {phone?.numbers.map((item, i) => (
+            <Link key={i} href={clearNumber(item.number)} className='block text-xl xl:text-2xl'>{item.number}</Link>
+          ))}
           <span className='text-sm'>{phone.time}</span>
         </div>
         <Link href={`mailto:${email}`} className='text-center text-xl xl:text-2xl'>{email}</Link>

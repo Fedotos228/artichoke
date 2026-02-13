@@ -32,6 +32,8 @@ export interface SocialsHomeACF {
 }
 
 export interface PhoneHomeACF {
-  number: string
+  numbers: {
+    number: string
+  }[]
   time: string
 }
