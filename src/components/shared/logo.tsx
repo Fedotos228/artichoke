@@ -19,6 +19,7 @@ export default function Logo({
             alt='Artichoke Logo'
             width={120}
             height={100}
+            className='w-auto h-auto'
           />
         </Link>
       )}
