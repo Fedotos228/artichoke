@@ -25,7 +25,8 @@
     "title": "Projects",
     "seeProject": "Explore our work",
     "back": "Back to projects",
-    "about": "About the project"
+    "about": "About the project",
+    "metaFallbackDescription": "Explore {title}, an interior design project by Artichoke Interiors."
   },
   "reqCall": "Enter your phone number..."
 }

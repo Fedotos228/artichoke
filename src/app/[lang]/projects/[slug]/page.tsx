@@ -5,7 +5,7 @@ import Loader from '@/components/shared/loader'
 import { Locale } from '@/i18n-config'
 import { getDictionary } from '@/lib/utils/get-dictionary'
 import paths from '@/lib/utils/paths'
-import { buildAlternates, ogLocaleMap } from '@/lib/utils/seo'
+import { buildAlternates, decodeHtmlEntities, ogLocaleMap, SITE_URL } from '@/lib/utils/seo'
 import { getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
 import { ProjectSlugTypes } from '@/types/projects.type'
 import { Metadata } from 'next'
@@ -26,19 +26,41 @@ export async function generateMetadata(
   { params }: { params: Promise<{ lang: Locale, slug: string }> }
 ): Promise<Metadata> {
   const { lang, slug } = await params
-  const project = await getSingleProjectMetadata(slug, lang)
+  const [project, dictionary] = await Promise.all([
+    getSingleProjectMetadata(slug, lang),
+    getDictionary(lang),
+  ])
+
+  const title = decodeHtmlEntities(project.title.rendered)
+  const shortDescription = decodeHtmlEntities(project.acf.short_description?.trim() || '')
+  const description = shortDescription || dictionary.projects.metaFallbackDescription.replace('{title}', title)
+
+  const { source_url: imageUrl, alt_text: imageAlt, media_details: imageDetails } = project.featured_media
 
   return {
-    title: project.title.rendered,
-    description: project.acf.short_description,
+    title,
+    description,
     alternates: buildAlternates(lang, paths.projectSingle(slug)),
     openGraph: {
-      title: project.title.rendered,
-      description: project.acf.short_description || '',
+      title,
+      description,
+      url: `${SITE_URL}/${lang}${paths.projectSingle(slug)}`,
+      siteName: 'Artichoke Interiors',
       locale: ogLocaleMap[lang],
       type: 'article',
-      images: [project.featured_media.source_url]
-    }
+      images: [{
+        url: imageUrl,
+        width: imageDetails?.width,
+        height: imageDetails?.height,
+        alt: imageAlt || title,
+      }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [imageUrl],
+    },
   }
 }
 
@@ -54,7 +76,7 @@ export default async function ProjectSinglePage({
 
   const {
     title: {
-      rendered: title
+      rendered: rawTitle
     },
     featured_media: thumbnail,
     content: content,
@@ -64,6 +86,10 @@ export default async function ProjectSinglePage({
       short_description
     }
   } = project
+
+  const title = decodeHtmlEntities(rawTitle)
+  const description = decodeHtmlEntities(short_description?.trim() || '')
+    || dictionary.projects.metaFallbackDescription.replace('{title}', title)
 
   return (
     <Suspense fallback={<Loader />}>
@@ -81,7 +107,7 @@ export default async function ProjectSinglePage({
               "@context": "https://schema.org",
               "@type": "CreativeWork",
               name: title,
-              description: short_description,
+              description,
               image: thumbnail.source_url,
               author: {
                 "@type": "Person",

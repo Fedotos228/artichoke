@@ -28,7 +28,8 @@ export interface IDictionary {
     title: string
     seeProject: string,
     back: string,
-    about: string
+    about: string,
+    metaFallbackDescription: string
   }
   reqCall: string,
 }

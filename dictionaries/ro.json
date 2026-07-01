@@ -25,7 +25,8 @@
     "title": "Proiecte",
     "seeProject": "Descoperă lucrările noastre",
     "back": "Înapoi la proiecte",
-    "about": "Despre proiect"
+    "about": "Despre proiect",
+    "metaFallbackDescription": "Descoperă {title}, un proiect de design interior semnat Artichoke Interiors."
   },
   "reqCall": "Introdu numărul..."
 }

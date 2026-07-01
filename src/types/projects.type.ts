@@ -11,6 +11,11 @@ export interface WPProjectSEOPromise {
   title: WPRendered
   featured_media: {
     source_url: string
+    alt_text?: string
+    media_details?: {
+      width: number
+      height: number
+    }
   }
   acf: {
     short_description: string

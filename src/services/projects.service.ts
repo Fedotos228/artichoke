@@ -20,7 +20,7 @@ async function getSingleProject(slug: string, lang: Locale): Promise<WProjectSin
 }
 
 async function getSingleProjectMetadata(slug: string, lang?: Locale): Promise<WPProjectSEOPromise> {
-  const res = await wpFetch<WPProjectSEOPromise[]>(`/projects?slug=${slug}&_fields=title,featured_media.source_url,acf.short_description`, {}, undefined, lang)
+  const res = await wpFetch<WPProjectSEOPromise[]>(`/projects?slug=${slug}&_fields=title,featured_media.source_url,featured_media.alt_text,featured_media.media_details.width,featured_media.media_details.height,acf.short_description`, {}, undefined, lang)
   const project = res[0]
 
   if (!project) throw new Error('Project metadata not found')
