@@ -1,37 +1,37 @@
+import { i18n } from '@/i18n-config'
+import { SITE_URL } from '@/lib/utils/seo'
 import { getProjectsSlug } from '@/services/projects.service'
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const projects = await getProjectsSlug()
+  const entries: MetadataRoute.Sitemap = []
 
-  const siteURL = process.env.SITE_URL as string
+  for (const locale of i18n.locales) {
+    const projects = await getProjectsSlug(locale)
 
-  const homePage: MetadataRoute.Sitemap[number] = {
-    url: siteURL,
-    lastModified: new Date(),
-    changeFrequency: 'yearly',
-    priority: 1,
-  }
+    entries.push({
+      url: `${SITE_URL}/${locale}`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: locale === i18n.defaultLocale ? 1 : 0.9,
+    })
 
-  const projectPage: MetadataRoute.Sitemap[number] = {
-    url: `${siteURL}/projects`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }
-
-  const projectsPages = projects.map(
-    (item): MetadataRoute.Sitemap[number] => ({
-      url: `${siteURL}/projects/${item.slug}`,
+    entries.push({
+      url: `${SITE_URL}/${locale}/projects`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.5,
+      priority: 0.8,
     })
-  )
 
-  return [
-    homePage,
-    projectPage,
-    ...projectsPages
-  ]
+    projects.forEach((project) => {
+      entries.push({
+        url: `${SITE_URL}/${locale}/projects/${project.slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.5,
+      })
+    })
+  }
+
+  return entries
 }

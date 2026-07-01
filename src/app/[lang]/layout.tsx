@@ -5,8 +5,14 @@ import { gilroy } from '@/lib/utils/font'
 import Loader from '@/components/shared/loader'
 import { i18n, Locale } from '@/i18n-config'
 import { getDictionary } from '@/lib/utils/get-dictionary'
+import { SITE_URL } from '@/lib/utils/seo'
+import { Metadata } from 'next'
 import { Suspense } from 'react'
 import "../globals.css"
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+}
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }))

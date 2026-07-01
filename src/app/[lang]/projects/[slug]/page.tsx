@@ -4,6 +4,8 @@ import ProjectHero from '@/components/pages/project-single/project-hero'
 import Loader from '@/components/shared/loader'
 import { Locale } from '@/i18n-config'
 import { getDictionary } from '@/lib/utils/get-dictionary'
+import paths from '@/lib/utils/paths'
+import { buildAlternates, ogLocaleMap } from '@/lib/utils/seo'
 import { getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
 import { ProjectSlugTypes } from '@/types/projects.type'
 import { Metadata } from 'next'
@@ -21,17 +23,20 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata(
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ lang: Locale, slug: string }> }
 ): Promise<Metadata> {
-  const { slug } = await params
-  const project = await getSingleProjectMetadata(slug)
+  const { lang, slug } = await params
+  const project = await getSingleProjectMetadata(slug, lang)
 
   return {
     title: project.title.rendered,
     description: project.acf.short_description,
+    alternates: buildAlternates(lang, paths.projectSingle(slug)),
     openGraph: {
       title: project.title.rendered,
       description: project.acf.short_description || '',
+      locale: ogLocaleMap[lang],
+      type: 'article',
       images: [project.featured_media.source_url]
     }
   }
@@ -40,7 +45,7 @@ export async function generateMetadata(
 export default async function ProjectSinglePage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ lang: Locale, slug: string }>
 }) {
   const { slug } = await params
   const cookieLocale = (await cookies()).get('locale')?.value as Locale
@@ -69,6 +74,7 @@ export default async function ProjectSinglePage({
           <ProjectGallery gallery={gallery} />
         </div>
         <Script
+          id="creative-work-jsonld"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -76,7 +82,7 @@ export default async function ProjectSinglePage({
               "@type": "CreativeWork",
               name: title,
               description: short_description,
-              image: thumbnail,
+              image: thumbnail.source_url,
               author: {
                 "@type": "Person",
                 name: "Ivan Railean"
