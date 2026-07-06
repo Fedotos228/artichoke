@@ -6,8 +6,7 @@ import { Locale } from '@/i18n-config'
 import { getDictionary } from '@/lib/utils/get-dictionary'
 import paths from '@/lib/utils/paths'
 import { buildAlternates, decodeHtmlEntities, ogLocaleMap, SITE_URL } from '@/lib/utils/seo'
-import { getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
-import { ProjectSlugTypes } from '@/types/projects.type'
+import { getProjectsSlug, getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
 import { Metadata } from 'next'
 import { cookies } from 'next/headers'
 import Script from 'next/script'
@@ -15,11 +14,18 @@ import { Suspense } from 'react'
 
 
 export async function generateStaticParams() {
-  const projects = await fetch(`${process.env.WP_URL}/projects?_fields=slug&lang=en`).then(res => res.json()) as ProjectSlugTypes
+  try {
+    const projects = await getProjectsSlug('en')
 
-  return projects.map((post) => ({
-    slug: post.slug
-  }))
+    return projects.map((post) => ({
+      slug: post.slug
+    }))
+  } catch (error) {
+    // WP being unreachable at build time shouldn't fail the whole deploy —
+    // pages still render on demand since this route is dynamic.
+    console.error('generateStaticParams: failed to fetch project slugs', error)
+    return []
+  }
 }
 
 export async function generateMetadata(

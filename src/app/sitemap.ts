@@ -7,7 +7,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = []
 
   for (const locale of i18n.locales) {
-    const projects = await getProjectsSlug(locale)
+    let projects: Awaited<ReturnType<typeof getProjectsSlug>> = []
+    try {
+      projects = await getProjectsSlug(locale)
+    } catch (error) {
+      // A temporary WP outage shouldn't fail the whole build/deploy —
+      // ship the sitemap with what we have (home + projects listing).
+      console.error(`sitemap: failed to fetch project slugs for "${locale}"`, error)
+    }
 
     entries.push({
       url: `${SITE_URL}/${locale}`,
