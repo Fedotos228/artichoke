@@ -1,3 +1,4 @@
+import ProjectGrid from '@/components/shared/project-grid'
 import { Button } from '@/components/ui/button'
 import { Locale } from '@/i18n-config'
 import { getDictionary } from '@/lib/utils/get-dictionary'
@@ -16,7 +17,7 @@ export default async function HomeProjects({ projects, title }: { projects?: WPr
     <div className='pb-10 xl:pb-[60px]' id='#projects'>
       <h2 className='text-center mb-14 py-3' dangerouslySetInnerHTML={{ __html: title}} />
 
-      {/* <ProjectGrid projects={projects} /> */}
+      <ProjectGrid projects={projects} />
 
       <div className='inline-flex justify-center w-full mt-10 px-4'>
         <Button asChild variant={'outline'}>
