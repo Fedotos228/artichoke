@@ -3,7 +3,7 @@ import { wpFetch } from '@/lib/wpClient'
 import { WPHomePage } from '@/types/home.types'
 
 async function getHomePage(lang: Locale): Promise<WPHomePage> {
-  const data = await wpFetch<WPHomePage[]>('/pages?slug=home', {}, undefined, lang)
+  const data = await wpFetch<WPHomePage[]>('/pages?slug=home', {}, undefined, lang, ['home'])
   const page = data[0]
 
 

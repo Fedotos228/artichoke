@@ -18,18 +18,18 @@ export default function ProjectGrid({ projects }: { projects?: WProjectsCard[] }
       return
     }
 
-      const observer = new IntersectionObserver((entries, obs) => {
-        const visible = entries.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement)
-        if (visible.length === 0) return
+    const observer = new IntersectionObserver((entries, obs) => {
+      const visible = entries.filter((e) => e.isIntersecting).map((e) => e.target as HTMLElement)
+      if (visible.length === 0) return
 
-        gsap.fromTo(
-          visible,
-          { y: 24, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', stagger: 0.08 }
-        )
+      gsap.fromTo(
+        visible,
+        { y: 24, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out', stagger: 0.08 }
+      )
 
-        visible.forEach((t) => obs.unobserve(t))
-      }, { threshold: 0, rootMargin: '0px 0px -10% 0px' })
+      visible.forEach((t) => obs.unobserve(t))
+    }, { threshold: 0, rootMargin: '0px 0px -10% 0px' })
 
     cards.forEach((c) => {
       gsap.set(c, { opacity: 0, y: 24 })
@@ -44,7 +44,7 @@ export default function ProjectGrid({ projects }: { projects?: WProjectsCard[] }
 
   return (
     <div ref={gridRef} className='grid grid-cols-1 md:grid-cols-3 gap-0.5'>
-      {projects?.map((project) => (
+      {projects && projects.map((project) => (
         <ProjectCard
           key={project.id}
           card={project}

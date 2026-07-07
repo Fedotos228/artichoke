@@ -3,7 +3,7 @@ import { wpFetch } from '@/lib/wpClient'
 import { ProjectSlugTypes, WPProjectSEOPromise, WProjectsCard, WProjectSingle } from '@/types/projects.type'
 
 async function getAllProjects(lang: Locale): Promise<WProjectsCard[]> {
-  const res = await wpFetch<WProjectsCard[]>('/projects?_fields=id,slug,title,featured_media', {}, undefined, lang)
+  const res = await wpFetch<WProjectsCard[]>('/projects?_fields=id,slug,title,featured_media', {}, undefined, lang, ['projects'])
 
   if (!res || res.length === 0) throw new Error('No projects found')
 
@@ -11,7 +11,7 @@ async function getAllProjects(lang: Locale): Promise<WProjectsCard[]> {
 }
 
 async function getSingleProject(slug: string, lang: Locale): Promise<WProjectSingle> {
-  const res = await wpFetch<WProjectSingle[]>(`/projects?slug=${slug}&_fields=id,slug,title,content,featured_media,acf`, {}, undefined, lang)
+  const res = await wpFetch<WProjectSingle[]>(`/projects?slug=${slug}&_fields=id,slug,title,content,featured_media,acf`, {}, undefined, lang, ['projects', `project:${slug}`])
   const project = res[0]
 
   if (!res || res.length === 0) throw new Error('No projects found')
@@ -20,7 +20,7 @@ async function getSingleProject(slug: string, lang: Locale): Promise<WProjectSin
 }
 
 async function getSingleProjectMetadata(slug: string, lang?: Locale): Promise<WPProjectSEOPromise> {
-  const res = await wpFetch<WPProjectSEOPromise[]>(`/projects?slug=${slug}&_fields=title,featured_media.source_url,featured_media.alt_text,featured_media.media_details.width,featured_media.media_details.height,acf.short_description`, {}, undefined, lang)
+  const res = await wpFetch<WPProjectSEOPromise[]>(`/projects?slug=${slug}&_fields=title,featured_media.source_url,featured_media.alt_text,featured_media.media_details.width,featured_media.media_details.height,acf.short_description`, {}, undefined, lang, ['projects', `project:${slug}`])
   const project = res[0]
 
   if (!project) throw new Error('Project metadata not found')
@@ -29,7 +29,7 @@ async function getSingleProjectMetadata(slug: string, lang?: Locale): Promise<WP
 }
 
 async function getProjectsSlug(lang?: Locale): Promise<ProjectSlugTypes> {
-  const res = await wpFetch<ProjectSlugTypes>(`/projects?_fields=slug`, {}, undefined, lang)
+  const res = await wpFetch<ProjectSlugTypes>(`/projects?_fields=slug`, {}, undefined, lang, ['projects'])
 
   if (!res || res.length === 0) throw new Error('Project slug not found')
 

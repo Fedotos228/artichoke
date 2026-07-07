@@ -6,18 +6,19 @@ async function wpFetch<T>(
   endpoint: string,
   options: RequestInit = {},
   baseUrl: string = WP_BASE_URL,
-  lang?: Locale
+  lang?: Locale,
+  tags?: string[]
 ): Promise<T> {
   if (lang) {
     const separator = endpoint.includes('?') ? '&' : '?';
     endpoint += `${separator}lang=${lang}`;
   }
-  
+
   let url = `${baseUrl}${endpoint}`
 
   const res = await fetch(url, {
     ...options,
-    next: { revalidate: 60 },
+    next: { revalidate: 60, tags },
     headers: {
       'Content-Type': 'application/json',
       ...(options.headers || {}),
