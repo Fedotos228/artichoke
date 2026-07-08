@@ -1,19 +1,24 @@
+import { Locale } from '@/i18n-config'
+import paths from '@/lib/utils/paths'
 import Image from 'next/image'
 import Link from 'next/link'
 
 type LogoVersion = 'desktop' | 'mobile'
 
 export default function Logo({
-  version = 'desktop'
+  version = 'desktop',
+  lang
 }: {
   version?: LogoVersion
+  lang: Locale
 }) {
   const logoPath = '/artichoke-logo.svg'
+  const href = `/${lang}${paths.home()}`
 
   return (
     <>
       {version === 'desktop' && (
-        <Link href="/" className='h-35 w-35 2xl:h-40 2xl:w-40 flex items-center justify-center'>
+        <Link href={href} className='h-35 w-35 2xl:h-40 2xl:w-40 flex items-center justify-center'>
           <Image
             src={logoPath}
             alt='Artichoke Logo'
@@ -25,7 +30,7 @@ export default function Logo({
       )}
 
       {version === 'mobile' && (
-        <Link href="/" className='flex items-center justify-center'>
+        <Link href={href} className='flex items-center justify-center'>
           <Image
             src={logoPath}
             alt='Artichoke Logo'
