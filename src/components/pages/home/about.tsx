@@ -47,11 +47,12 @@ export default function About({
   }, [about])
 
   if (!about) return null
+  
 
   return (
-    <section ref={rootRef} className="mx-auto px-6 py-12 max-w-7xl">
+    <section ref={rootRef} id="about" className="mx-auto px-6 py-12 max-w-7xl">
       {about.map((block, index) => (
-        <div id={block.slug} key={index} className="about-block grid gap-8 md:grid-cols-2 items-center mb-12">
+        <div id={block.slug?.replace(/^#/, '')} key={index} className="about-block grid gap-8 md:grid-cols-2 items-center mb-12">
           <div className="w-full order-class">
             <div className="relative w-full image-height">
               <Image
