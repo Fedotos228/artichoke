@@ -1,12 +1,9 @@
-import { Locale } from '@/i18n-config'
-import { getDictionary } from '@/lib/utils/get-dictionary'
 import { PhoneHomeACF, SocialsHomeACF } from '@/types/home.types'
-import { cookies } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
 
 
-export default async function HeroContact({
+export default function HeroContact({
   socials,
   phone,
   email
@@ -15,9 +12,6 @@ export default async function HeroContact({
   phone: PhoneHomeACF,
   email: string
 }) {
-  const cookieLocale = (await cookies()).get('locale')?.value as Locale
-  const dictionary = await getDictionary(cookieLocale)
-
   function clearNumber(string: string) {
     if (!string) return null
     return `+${string.replace(/\D+/g, '').replaceAll('-', '')}`
@@ -35,9 +29,12 @@ export default async function HeroContact({
         </div>
 
         <div className='text-center'>
-          {phone?.numbers.map((item, i) => (
-            <Link key={i} href={clearNumber(item.number) || '#'} className='block text-xl xl:text-2xl'>{item.number}</Link>
-          ))}
+          {phone?.numbers.map((item, i) => {
+            const cleared = clearNumber(item.number)
+            return (
+              <Link key={i} href={cleared ? `tel:${cleared}` : '#'} className='block text-xl xl:text-2xl'>{item.number}</Link>
+            )
+          })}
           <span className='text-sm'>{phone.time}</span>
         </div>
         <Link href={`mailto:${email}`} className='text-center text-xl xl:text-2xl'>{email}</Link>

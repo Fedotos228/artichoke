@@ -42,9 +42,6 @@ export default function ContactForm({ dictionary }: { dictionary: IDictionary['c
   async function onSubmit(data: z.infer<typeof ContactFormSchema>) {
     setIsLoading(true)
 
-
-    setIsLoading(false)
-
     try {
       const result = await sendContact(data)
 
@@ -107,13 +104,12 @@ export default function ContactForm({ dictionary }: { dictionary: IDictionary['c
               <FormItem className='mb-6'>
                 <FormLabel>{dictionary.type} <span className='text-destructive'>*</span></FormLabel>
                 <FormControl>
-                  <Select onValueChange={field.onChange}>
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select an option" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {/* @ts-ignore */}
                         {dictionary.workType.map((options: WorkTypeOptionType) => (
                           <SelectItem key={options.value} value={options.value}>{options.label}</SelectItem>
                         ))}
@@ -138,7 +134,7 @@ export default function ContactForm({ dictionary }: { dictionary: IDictionary['c
               </FormItem>
             )}
           />
-          <Button variant='white' type="submit" className='mx-auto md:max-w-full'>{dictionary.submit}</Button>
+          <Button variant='white' type="submit" disabled={isLoading} className='mx-auto md:max-w-full'>{dictionary.submit}</Button>
         </form>
       </Form>
     </div>

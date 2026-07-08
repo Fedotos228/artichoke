@@ -7,7 +7,6 @@ import paths from '@/lib/utils/paths'
 import { buildAlternates, ogLocaleMap, SITE_URL } from '@/lib/utils/seo'
 import { getHomePage } from '@/services/home.service'
 import { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import Script from 'next/script'
 import { Suspense } from 'react'
 
@@ -74,9 +73,13 @@ export async function generateMetadata(
   }
 }
 
-export default async function Home() {
-  const cookieLocale = (await cookies()).get('locale')?.value as Locale
-  const page = await getHomePage(cookieLocale)
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: Locale }>
+}) {
+  const { lang } = await params
+  const page = await getHomePage(lang)
 
   const acf = page.acf
 
@@ -91,7 +94,7 @@ export default async function Home() {
         slogan={acf.slogan}
       />
       <About about={acf.about_block} />
-      <HomeProjects projects={acf.home_projects} title={acf.title} />
+      <HomeProjects projects={acf.home_projects} title={acf.title} lang={lang} />
       <Script
         id="local-business-jsonld"
         type="application/ld+json"

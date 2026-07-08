@@ -12,7 +12,7 @@ export default function Loader() {
   }, [])
 
   return (
-    <div className='absolute inset-0 w-full h-full bg-background flex items-center justify-center z-50'>
+    <div className='fixed inset-0 w-full h-full bg-background flex items-center justify-center z-50'>
       <Image
         src="/artichoke-logo.svg"
         alt="Loading logo"

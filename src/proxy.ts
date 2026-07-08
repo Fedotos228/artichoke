@@ -4,12 +4,12 @@ import { NextResponse } from "next/server"
 
 import { match as matchLocale } from "@formatjs/intl-localematcher"
 import Negotiator from "negotiator"
-import { i18n } from './i18n-config'
+import { i18n, type Locale } from './i18n-config'
 
 function getLocale(request: NextRequest): string | undefined {
   // Check if locale is saved in cookie
   const cookieLocale = request.cookies.get('locale')?.value;
-  if (cookieLocale && i18n.locales.includes(cookieLocale as any)) {
+  if (cookieLocale && i18n.locales.includes(cookieLocale as Locale)) {
     return cookieLocale;
   }
 
@@ -29,7 +29,7 @@ function getLocale(request: NextRequest): string | undefined {
   const locales = Array.from(i18n.locales);
 
   // Use negotiator and intl-localematcher to get best locale
-  let languages = new Negotiator({ headers: negotiatorHeaders }).languages(
+  const languages = new Negotiator({ headers: negotiatorHeaders }).languages(
     locales,
   );
 
@@ -80,7 +80,7 @@ export function proxy(request: NextRequest) {
 
   // If pathname has locale, update cookie to match the URL locale
   const urlLocale = pathname.split('/')[1];
-  if (i18n.locales.includes(urlLocale as any)) {
+  if (i18n.locales.includes(urlLocale as Locale)) {
     const response = NextResponse.next();
     response.cookies.set('locale', urlLocale, { path: '/', maxAge: 60 * 60 * 24 * 365 });
     return response;

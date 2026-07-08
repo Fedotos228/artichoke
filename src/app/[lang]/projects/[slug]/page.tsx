@@ -8,7 +8,6 @@ import paths from '@/lib/utils/paths'
 import { buildAlternates, decodeHtmlEntities, ogLocaleMap, SITE_URL } from '@/lib/utils/seo'
 import { getProjectsSlug, getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
 import { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import Script from 'next/script'
 import { Suspense } from 'react'
 
@@ -75,10 +74,9 @@ export default async function ProjectSinglePage({
 }: {
   params: Promise<{ lang: Locale, slug: string }>
 }) {
-  const { slug } = await params
-  const cookieLocale = (await cookies()).get('locale')?.value as Locale
-  const project = await getSingleProject(slug, cookieLocale)
-  const dictionary = await getDictionary(cookieLocale)
+  const { lang, slug } = await params
+  const project = await getSingleProject(slug, lang)
+  const dictionary = await getDictionary(lang)
 
   const {
     title: {
@@ -100,7 +98,7 @@ export default async function ProjectSinglePage({
   return (
     <Suspense fallback={<Loader />}>
       <main>
-        <ProjectHero title={title} thumbnail={thumbnail} back={dictionary.projects.back} />
+        <ProjectHero title={title} thumbnail={thumbnail} back={dictionary.projects.back} lang={lang} />
         <div className='max-w-[1194px] mx-auto px-4 py-20'>
           <ProjectDescription content={content} details={details} text={dictionary.projects.about} />
           <ProjectGallery gallery={gallery} />

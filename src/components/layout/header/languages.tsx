@@ -15,7 +15,6 @@ export const Languages = () => {
   })()
 
   const redirectedPathname = (locale: Locale) => {
-    const defaultLocale = i18n.defaultLocale
     if (!pathname || pathname === '/') return `/${locale}/`
 
     const segments = pathname.split('/').filter(Boolean)

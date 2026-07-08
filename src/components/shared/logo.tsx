@@ -8,7 +8,7 @@ export default function Logo({
 }: {
   version?: LogoVersion
 }) {
-  let logoPath = '/artichoke-logo.svg'
+  const logoPath = '/artichoke-logo.svg'
 
   return (
     <>

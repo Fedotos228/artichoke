@@ -1,14 +1,15 @@
 'use client'
 
+import { Locale } from '@/i18n-config'
 import paths from '@/lib/utils/paths'
 import { WProjectsCard } from '@/types/projects.type'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function ProjectCard({ card }: { card: WProjectsCard }) {
+export default function ProjectCard({ card, lang }: { card: WProjectsCard, lang: Locale }) {
   return (
     <Link
-      href={paths.projectSingle(card.slug)}
+      href={`/${lang}${paths.projectSingle(card.slug)}`}
       className='block w-full group relative cursor-pointer overflow-hidden'
     >
       <div className='relative w-full h-80 md:h-[520px]'>

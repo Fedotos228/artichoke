@@ -10,12 +10,10 @@ export default function About({
 }: {
   about?: AboutHomeACF[]
 }) {
-  if (!about) return null
-
   const rootRef = useRef<HTMLElement | null>(null)
 
   useEffect(() => {
-    if (!rootRef.current) return
+    if (!about || !rootRef.current) return
     const blocks = Array.from(rootRef.current.querySelectorAll('.about-block')) as HTMLElement[]
 
     const prefersReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -46,11 +44,13 @@ export default function About({
       observer.disconnect()
       gsap.killTweensOf(blocks)
     }
-  }, [])
+  }, [about])
+
+  if (!about) return null
 
   return (
     <section ref={rootRef} className="mx-auto px-6 py-12 max-w-7xl">
-      {about?.map((block, index) => (
+      {about.map((block, index) => (
         <div id={block.slug} key={index} className="about-block grid gap-8 md:grid-cols-2 items-center mb-12">
           <div className="w-full order-class">
             <div className="relative w-full image-height">

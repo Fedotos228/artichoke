@@ -1,11 +1,12 @@
 "use client"
 
+import { Locale } from '@/i18n-config'
 import { WProjectsCard } from '@/types/projects.type'
 import gsap from 'gsap'
 import { useEffect, useRef } from 'react'
 import ProjectCard from './project-card'
 
-export default function ProjectGrid({ projects }: { projects?: WProjectsCard[] }) {
+export default function ProjectGrid({ projects, lang }: { projects?: WProjectsCard[], lang: Locale }) {
   const gridRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -48,6 +49,7 @@ export default function ProjectGrid({ projects }: { projects?: WProjectsCard[] }
         <ProjectCard
           key={project.id}
           card={project}
+          lang={lang}
         />
       ))}
     </div>

@@ -6,7 +6,6 @@ import paths from '@/lib/utils/paths'
 import { buildAlternates, ogLocaleMap, SITE_URL } from '@/lib/utils/seo'
 import { getAllProjects } from '@/services/projects.service'
 import { Metadata } from 'next'
-import { cookies } from 'next/headers'
 import { Suspense } from 'react'
 
 const description = 'Explore our interior design portfolio featuring residential and commercial projects defined by balance, functionality, and refined aesthetics.'
@@ -45,10 +44,14 @@ export async function generateMetadata(
   }
 }
 
-export default async function ProjectsPage() {
-  const cookieLocale = (await cookies()).get('locale')?.value as Locale
-  const projects = await getAllProjects(cookieLocale)
-  const dictionary = await getDictionary(cookieLocale)
+export default async function ProjectsPage({
+  params,
+}: {
+  params: Promise<{ lang: Locale }>
+}) {
+  const { lang } = await params
+  const projects = await getAllProjects(lang)
+  const dictionary = await getDictionary(lang)
 
   return (
     <Suspense fallback={<Loader />}>
@@ -56,7 +59,7 @@ export default async function ProjectsPage() {
         <h1 className='text-center py-16 !font-normal !text-[48px] !leading-[160%] !tracking-normal !normal-case'>{dictionary.projects.title}</h1>
 
         <div className='mb-0.5'>
-          <ProjectGrid projects={projects} />
+          <ProjectGrid projects={projects} lang={lang} />
         </div>
       </main>
     </Suspense>
