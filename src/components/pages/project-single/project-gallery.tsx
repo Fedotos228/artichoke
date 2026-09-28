@@ -14,19 +14,23 @@ export default function ProjectGallery({ gallery }: { gallery?: ProjectGalleryTy
     },
   })
 
-  if (!gallery || gallery.length === 0) {
+  // ACF returns `image: ""` for repeater rows added without picking an image —
+  // skip them, otherwise the Link below gets an undefined href and crashes the page.
+  const images = (gallery ?? []).filter(({ image }) => image?.source_url)
+
+  if (images.length === 0) {
     return null
   }
 
   return (
     <div ref={fancyboxref as unknown as Ref<HTMLDivElement>} className='grid grid-cols-2 md:grid-cols-2 gap-5'>
-      {gallery.map(({ image }, index) => (
+      {images.map(({ image }, index) => (
         <Link
           key={index}
           href={image.source_url}
           data-fancybox='gallery'
           data-caption={image.alt_text || ''}
-          className={cn('block w-full cursor-pointer', index === 0 ? 'md:col-span-2' : '', index === gallery?.length -1 ? 'md:col-span-2' : '')}
+          className={cn('block w-full cursor-pointer', index === 0 ? 'md:col-span-2' : '', index === images.length - 1 ? 'md:col-span-2' : '')}
         >
           <Image
             src={image.source_url}
