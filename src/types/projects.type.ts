@@ -4,7 +4,7 @@ export interface WProjectsCard {
   id: number
   slug: string
   title: WPRendered
-  featured_media: FeaturedMediaWP
+  featured_media: FeaturedMediaWP | null
 }
 
 export interface WPProjectSEOPromise {
@@ -16,7 +16,7 @@ export interface WPProjectSEOPromise {
       width: number
       height: number
     }
-  }
+  } | null
   acf: {
     short_description: string
   }

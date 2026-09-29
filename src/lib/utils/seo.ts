@@ -1,6 +1,6 @@
 import { i18n, Locale } from '@/i18n-config'
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://artichoke-interiors.com').replace(/\/$/, '')
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'https://artichoke-interiors.com').replace(/\/$/, '')
 
 export const ogLocaleMap: Record<Locale, string> = {
   en: 'en_US',

@@ -1,6 +1,11 @@
 import type { Locale } from '@/i18n-config'
 
 const WP_BASE_URL = process.env.WP_URL as string
+
+if (!WP_BASE_URL) {
+  throw new Error('Missing required environment variable: WP_URL')
+}
+
 const WP_HOSTNAME = new URL(WP_BASE_URL).hostname
 // The site is served over HTTPS, so any WP-sourced media must be too, even
 // though WP_URL (the API base, fetched server-to-server) is plain HTTP.

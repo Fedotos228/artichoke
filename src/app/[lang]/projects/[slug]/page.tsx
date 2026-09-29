@@ -8,6 +8,7 @@ import paths from '@/lib/utils/paths'
 import { buildAlternates, decodeHtmlEntities, ogLocaleMap, SITE_URL } from '@/lib/utils/seo'
 import { getProjectsSlug, getSingleProject, getSingleProjectMetadata } from '@/services/projects.service'
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { Suspense } from 'react'
 
@@ -36,11 +37,13 @@ export async function generateMetadata(
     getDictionary(lang),
   ])
 
+  if (!project) return {}
+
   const title = decodeHtmlEntities(project.title.rendered)
   const shortDescription = decodeHtmlEntities(project.acf.short_description?.trim() || '')
   const description = shortDescription || dictionary.projects.metaFallbackDescription.replace('{title}', title)
 
-  const { source_url: imageUrl, alt_text: imageAlt, media_details: imageDetails } = project.featured_media
+  const { source_url: imageUrl, alt_text: imageAlt, media_details: imageDetails } = project.featured_media ?? {}
 
   return {
     title,
@@ -53,18 +56,18 @@ export async function generateMetadata(
       siteName: 'Artichoke Interiors',
       locale: ogLocaleMap[lang],
       type: 'article',
-      images: [{
+      images: imageUrl ? [{
         url: imageUrl,
         width: imageDetails?.width,
         height: imageDetails?.height,
         alt: imageAlt || title,
-      }],
+      }] : undefined,
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: [imageUrl],
+      images: imageUrl ? [imageUrl] : undefined,
     },
   }
 }
@@ -76,6 +79,7 @@ export default async function ProjectSinglePage({
 }) {
   const { lang, slug } = await params
   const project = await getSingleProject(slug, lang)
+  if (!project) notFound()
   const dictionary = await getDictionary(lang)
 
   const {
@@ -112,7 +116,7 @@ export default async function ProjectSinglePage({
               "@type": "CreativeWork",
               name: title,
               description,
-              image: thumbnail.source_url,
+              image: thumbnail?.source_url,
               author: {
                 "@type": "Person",
                 name: "Ivan Railean"

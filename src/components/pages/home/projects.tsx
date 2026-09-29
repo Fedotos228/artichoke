@@ -9,11 +9,13 @@ import Link from 'next/link'
 export default async function HomeProjects({ projects, title, lang }: { projects?: WProjectsCard[], title: string, lang: Locale }) {
   const dictionary = await getDictionary(lang)
 
+
+
   return (
     <div className='pb-10 xl:pb-[60px]' id='projects'>
-      <h2 className='text-center mb-14 py-3' dangerouslySetInnerHTML={{ __html: title}} />
+      <h2 className='text-center mb-14 py-3' dangerouslySetInnerHTML={{ __html: title }} />
 
-      <ProjectGrid projects={projects} lang={lang} />
+      {projects && <ProjectGrid projects={projects} lang={lang} />}
 
       <div className='inline-flex justify-center w-full mt-10 px-4'>
         <Button asChild variant={'outline'}>

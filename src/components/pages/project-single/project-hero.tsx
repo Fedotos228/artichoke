@@ -11,19 +11,19 @@ export default function ProjectHero({
   lang
 }: {
   title: string,
-  thumbnail: FeaturedMediaWP,
+  thumbnail: FeaturedMediaWP | null,
   back: string,
   lang: Locale
 }) {
   return (
     <div
-      style={{
+      style={thumbnail?.source_url ? {
         background: `url(${thumbnail.source_url}) center center / cover no-repeat`,
-      }}
+      } : undefined}
       className='w-full'
     >
       <div className='flex justify-center h-dvh flex-col max-w-[1194px] px-4 lg:px-0 2xl:max-w-[1360px] mx-auto'>
-        <h1 className='text-background'>{title}</h1>
+        <h1 className={thumbnail?.source_url ? 'text-background' : undefined}>{title}</h1>
 
         <Link href={`/${lang}${paths.projects()}`} className='inline-flex items-center gap-3 text-background uppercase font-medium mt-6 group hover:underline'>
           <ChevronLeft size={24} className='inline-block group-hover:-translate-x-1 transition duration-75' />

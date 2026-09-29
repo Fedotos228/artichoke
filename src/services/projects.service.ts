@@ -23,48 +23,64 @@ async function getFeaturedMediaMap(ids: number[], lang?: Locale): Promise<Record
   const uniqueIds = Array.from(new Set(ids))
   if (uniqueIds.length === 0) return {}
 
-  const media = await wpFetch<FeaturedMediaWP[]>(`/media?include=${uniqueIds.join(',')}&_fields=${MEDIA_FIELDS}`, {}, undefined, lang, ['projects'])
+  try {
+    const media = await wpFetch<FeaturedMediaWP[]>(`/media?include=${uniqueIds.join(',')}&per_page=100&_fields=${MEDIA_FIELDS}`, {}, undefined, lang, ['projects'])
 
-  return Object.fromEntries(media.map((item) => [item.id, item]))
+    return Object.fromEntries(media.map((item) => [item.id, item]))
+  } catch (error) {
+    console.error('Failed to load featured media', error)
+    return {}
+  }
 }
 
-async function resolveFeaturedMedia(value: MaybeMediaId, lang?: Locale): Promise<FeaturedMediaWP> {
-  return isFeaturedMediaObject(value) ? value : getFeaturedMedia(value, lang)
+// A project without an image has `featured_media: 0`, and a deleted attachment
+// 404s — neither should take the whole page down.
+async function resolveFeaturedMedia(value: MaybeMediaId, lang?: Locale): Promise<FeaturedMediaWP | null> {
+  if (isFeaturedMediaObject(value)) return value
+  if (!value) return null
+
+  try {
+    return await getFeaturedMedia(value, lang)
+  } catch (error) {
+    console.error(`Failed to load featured media ${value}`, error)
+    return null
+  }
 }
 
 async function getAllProjects(lang: Locale): Promise<WProjectsCard[]> {
   const res = await wpFetch<WithMaybeMediaId<WProjectsCard>[]>('/projects?_fields=id,slug,title,featured_media&orderby=date&order=desc', {}, undefined, lang, ['projects'])
 
-  if (!res || res.length === 0) throw new Error('No projects found')
+  // A locale with no translated projects yet is a valid state, not an error.
+  if (!res || res.length === 0) return []
 
   const idsToFetch = res
     .map((project) => project.featured_media)
-    .filter((media): media is number => !isFeaturedMediaObject(media))
+    .filter((media): media is number => typeof media === 'number' && media > 0)
 
   const mediaMap = await getFeaturedMediaMap(idsToFetch, lang)
 
   return res.map((project) => ({
     ...project,
-    featured_media: isFeaturedMediaObject(project.featured_media) ? project.featured_media : mediaMap[project.featured_media],
+    featured_media: isFeaturedMediaObject(project.featured_media) ? project.featured_media : (mediaMap[project.featured_media] ?? null),
   }))
 }
 
-async function getSingleProject(slug: string, lang: Locale): Promise<WProjectSingle> {
-  const res = await wpFetch<WithMaybeMediaId<WProjectSingle>[]>(`/projects?slug=${slug}&_fields=id,slug,title,content,featured_media,acf`, {}, undefined, lang, ['projects', `project:${slug}`])
-  const project = res[0]
+async function getSingleProject(slug: string, lang: Locale): Promise<WProjectSingle | null> {
+  const res = await wpFetch<WithMaybeMediaId<WProjectSingle>[]>(`/projects?slug=${encodeURIComponent(slug)}&_fields=id,slug,title,content,featured_media,acf`, {}, undefined, lang, ['projects', `project:${slug}`])
+  const project = res?.[0]
 
-  if (!res || res.length === 0) throw new Error('No projects found')
+  if (!project) return null
 
   const featured_media = await resolveFeaturedMedia(project.featured_media, lang)
 
   return { ...project, featured_media }
 }
 
-async function getSingleProjectMetadata(slug: string, lang?: Locale): Promise<WPProjectSEOPromise> {
-  const res = await wpFetch<WithMaybeMediaId<WPProjectSEOPromise>[]>(`/projects?slug=${slug}&_fields=title,featured_media,acf.short_description`, {}, undefined, lang, ['projects', `project:${slug}`])
-  const project = res[0]
+async function getSingleProjectMetadata(slug: string, lang?: Locale): Promise<WPProjectSEOPromise | null> {
+  const res = await wpFetch<WithMaybeMediaId<WPProjectSEOPromise>[]>(`/projects?slug=${encodeURIComponent(slug)}&_fields=title,featured_media,acf.short_description`, {}, undefined, lang, ['projects', `project:${slug}`])
+  const project = res?.[0]
 
-  if (!project) throw new Error('Project metadata not found')
+  if (!project) return null
 
   const featured_media = await resolveFeaturedMedia(project.featured_media, lang)
 
@@ -74,9 +90,7 @@ async function getSingleProjectMetadata(slug: string, lang?: Locale): Promise<WP
 async function getProjectsSlug(lang?: Locale): Promise<ProjectSlugTypes> {
   const res = await wpFetch<ProjectSlugTypes>(`/projects?_fields=slug&orderby=date&order=desc`, {}, undefined, lang, ['projects'])
 
-  if (!res || res.length === 0) throw new Error('Project slug not found')
-
-  return res
+  return res ?? []
 }
 
 export { getAllProjects, getProjectsSlug, getSingleProject, getSingleProjectMetadata }

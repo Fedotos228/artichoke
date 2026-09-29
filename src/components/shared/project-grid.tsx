@@ -45,9 +45,9 @@ export default function ProjectGrid({ projects, lang }: { projects?: WProjectsCa
 
   return (
     <div ref={gridRef} className='grid grid-cols-1 md:grid-cols-3 gap-0.5'>
-      {projects && projects.map((project) => (
+      {projects?.filter((project) => project?.slug && project.title).map((project) => (
         <ProjectCard
-          key={project.id}
+          key={project.id ?? project.slug}
           card={project}
           lang={lang}
         />

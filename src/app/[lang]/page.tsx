@@ -7,6 +7,7 @@ import paths from '@/lib/utils/paths'
 import { buildAlternates, ogLocaleMap, SITE_URL } from '@/lib/utils/seo'
 import { getHomePage } from '@/services/home.service'
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { Suspense } from 'react'
 
@@ -80,6 +81,7 @@ export default async function Home({
 }) {
   const { lang } = await params
   const page = await getHomePage(lang)
+  if (!page) notFound()
 
   const acf = page.acf
 

@@ -35,11 +35,17 @@ export async function POST(request: NextRequest) {
   if (type === 'home') {
     revalidateTag('home', 'max')
     localizedPaths(paths.home()).forEach(revalidate)
-  } else if (type === 'project' && slug) {
+  } else if (type === 'project') {
+    // Adding/removing a project changes the projects list, the home grid
+    // (acf.home_projects) and the sitemap, not just the single page.
     revalidateTag('projects', 'max')
-    revalidateTag(`project:${slug}`, 'max')
+    revalidateTag('home', 'max')
+    localizedPaths(paths.home()).forEach(revalidate)
     localizedPaths(paths.projects()).forEach(revalidate)
-    localizedPaths(paths.projectSingle(slug)).forEach(revalidate)
+    if (slug) {
+      revalidateTag(`project:${slug}`, 'max')
+      localizedPaths(paths.projectSingle(slug)).forEach(revalidate)
+    }
     revalidate('/sitemap.xml')
   } else if (type === 'footer') {
     revalidateTag('footer', 'max')
