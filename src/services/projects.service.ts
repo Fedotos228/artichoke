@@ -1,4 +1,4 @@
-import { Locale } from '@/i18n-config'
+import { i18n, Locale } from '@/i18n-config'
 import { wpFetch } from '@/lib/wpClient'
 import { ProjectSlugTypes, WPProjectSEOPromise, WProjectsCard, WProjectSingle } from '@/types/projects.type'
 import { FeaturedMediaWP } from '@/types/wp.types'
@@ -47,12 +47,7 @@ async function resolveFeaturedMedia(value: MaybeMediaId, lang?: Locale): Promise
   }
 }
 
-async function getAllProjects(lang: Locale): Promise<WProjectsCard[]> {
-  const res = await wpFetch<WithMaybeMediaId<WProjectsCard>[]>('/projects?_fields=id,slug,title,featured_media&orderby=date&order=desc', {}, undefined, lang, ['projects'])
-
-  // A locale with no translated projects yet is a valid state, not an error.
-  if (!res || res.length === 0) return []
-
+async function withFeaturedMedia(res: WithMaybeMediaId<WProjectsCard>[], lang?: Locale): Promise<WProjectsCard[]> {
   const idsToFetch = res
     .map((project) => project.featured_media)
     .filter((media): media is number => typeof media === 'number' && media > 0)
@@ -65,8 +60,39 @@ async function getAllProjects(lang: Locale): Promise<WProjectsCard[]> {
   }))
 }
 
+async function getAllProjects(lang: Locale): Promise<WProjectsCard[]> {
+  const res = await wpFetch<WithMaybeMediaId<WProjectsCard>[]>('/projects?_fields=id,slug,title,featured_media&orderby=date&order=desc', {}, undefined, lang, ['projects'])
+
+  // A locale with no translated projects yet is a valid state, not an error.
+  if (!res || res.length === 0) return []
+
+  return withFeaturedMedia(res, lang)
+}
+
+// The objects embedded in ACF relationship fields (e.g. home `home_projects`) are
+// cached by WP and go stale (old slug/title) after a project is edited. Resolve
+// the IDs against the live `projects` endpoint instead. No `lang` filter on
+// purpose: locales without their own translation still reference the default-
+// language project. Order follows the given IDs, missing/deleted IDs are dropped.
+async function getProjectsByIds(ids: number[]): Promise<WProjectsCard[]> {
+  const uniqueIds = Array.from(new Set(ids)).slice(0, 100)
+  if (uniqueIds.length === 0) return []
+
+  const res = await wpFetch<WithMaybeMediaId<WProjectsCard>[]>(`/projects?include=${uniqueIds.join(',')}&orderby=include&per_page=100&_fields=id,slug,title,featured_media`, {}, undefined, undefined, ['projects'])
+
+  if (!res || res.length === 0) return []
+
+  return withFeaturedMedia(res)
+}
+
 async function getSingleProject(slug: string, lang: Locale): Promise<WProjectSingle | null> {
-  const res = await wpFetch<WithMaybeMediaId<WProjectSingle>[]>(`/projects?slug=${encodeURIComponent(slug)}&_fields=id,slug,title,content,featured_media,acf`, {}, undefined, lang, ['projects', `project:${slug}`])
+  const fields = 'id,slug,title,content,featured_media,acf'
+  const tags = ['projects', `project:${slug}`]
+  let res = await wpFetch<WithMaybeMediaId<WProjectSingle>[]>(`/projects?slug=${encodeURIComponent(slug)}&_fields=${fields}`, {}, undefined, lang, tags)
+  // No translation for this locale yet: fall back to the default-language project.
+  if (!res?.length && lang !== i18n.defaultLocale) {
+    res = await wpFetch<WithMaybeMediaId<WProjectSingle>[]>(`/projects?slug=${encodeURIComponent(slug)}&_fields=${fields}&lang=${i18n.defaultLocale}`, {}, undefined, undefined, tags)
+  }
   const project = res?.[0]
 
   if (!project) return null
@@ -77,7 +103,12 @@ async function getSingleProject(slug: string, lang: Locale): Promise<WProjectSin
 }
 
 async function getSingleProjectMetadata(slug: string, lang?: Locale): Promise<WPProjectSEOPromise | null> {
-  const res = await wpFetch<WithMaybeMediaId<WPProjectSEOPromise>[]>(`/projects?slug=${encodeURIComponent(slug)}&_fields=title,featured_media,acf.short_description`, {}, undefined, lang, ['projects', `project:${slug}`])
+  const fields = 'title,featured_media,acf.short_description'
+  const tags = ['projects', `project:${slug}`]
+  let res = await wpFetch<WithMaybeMediaId<WPProjectSEOPromise>[]>(`/projects?slug=${encodeURIComponent(slug)}&_fields=${fields}`, {}, undefined, lang, tags)
+  if (!res?.length && lang !== i18n.defaultLocale) {
+    res = await wpFetch<WithMaybeMediaId<WPProjectSEOPromise>[]>(`/projects?slug=${encodeURIComponent(slug)}&_fields=${fields}&lang=${i18n.defaultLocale}`, {}, undefined, undefined, tags)
+  }
   const project = res?.[0]
 
   if (!project) return null
@@ -93,4 +124,4 @@ async function getProjectsSlug(lang?: Locale): Promise<ProjectSlugTypes> {
   return res ?? []
 }
 
-export { getAllProjects, getProjectsSlug, getSingleProject, getSingleProjectMetadata }
+export { getAllProjects, getProjectsByIds, getProjectsSlug, getSingleProject, getSingleProjectMetadata }

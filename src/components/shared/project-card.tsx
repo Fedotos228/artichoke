@@ -14,14 +14,14 @@ export default function ProjectCard({ card, lang }: { card: WProjectsCard, lang:
     >
       <div className='relative w-full h-80 md:h-[520px]'>
         {card.featured_media?.source_url && (
-        <Image
+          <Image
             src={card.featured_media.source_url}
             alt={card.title.rendered}
-          fill
-          className="object-cover object-center"
-          sizes="(max-width: 768px) 100vw, 33vw"
-          quality={100}
-        />
+            fill
+            className="object-cover object-center"
+            sizes="(max-width: 768px) 100vw, 33vw"
+            quality={100}
+          />
         )}
 
         <div className='absolute inset-0 transition-opacity duration-150 ease-out bg-linear-to-b from-black/0 to-black/60 md:opacity-0 group-hover:opacity-100' />

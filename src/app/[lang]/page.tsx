@@ -6,6 +6,7 @@ import { Locale } from '@/i18n-config'
 import paths from '@/lib/utils/paths'
 import { buildAlternates, ogLocaleMap, SITE_URL } from '@/lib/utils/seo'
 import { getHomePage } from '@/services/home.service'
+import { getProjectsByIds } from '@/services/projects.service'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import Script from 'next/script'
@@ -85,6 +86,14 @@ export default async function Home({
 
   const acf = page.acf
 
+  // `acf.home_projects` embeds WP-cached (stale) project objects and may hold
+  // error objects for deleted posts — keep only the IDs and re-fetch fresh data.
+  const embeddedProjects = (acf.home_projects ?? []).filter((project) => typeof project?.id === 'number')
+  const homeProjects = await getProjectsByIds(embeddedProjects.map((project) => project.id)).catch((error) => {
+    console.error('home: failed to refresh home projects, using embedded data', error)
+    return embeddedProjects
+  })
+
   return (
     <Suspense fallback={<Loader />}>
       <Hero
@@ -96,7 +105,7 @@ export default async function Home({
         slogan={acf.slogan}
       />
       <About about={acf.about_block} />
-      <HomeProjects projects={acf.home_projects} title={acf.title} lang={lang} />
+      <HomeProjects projects={homeProjects} title={acf.title} lang={lang} />
       <Script
         id="local-business-jsonld"
         type="application/ld+json"
