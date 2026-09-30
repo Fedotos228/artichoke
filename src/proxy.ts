@@ -45,7 +45,7 @@ export function proxy(request: NextRequest) {
   if (staticAssetRE.test(pathname)) return
   if (pathname.startsWith('/socials/') || pathname === '/socials') return
   if (pathname === '/favicon.ico' || pathname === '/manifest.json') return
-  if (pathname === '/sitemap.xml') return
+  if (pathname === '/sitemap.xml' || pathname === '/robots.txt') return
   if (pathname === '/admin') return
 
   // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.

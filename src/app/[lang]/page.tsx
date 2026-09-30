@@ -119,7 +119,7 @@ export default async function Home({
             description,
             telephone: acf.phone?.numbers?.[0]?.number,
             email: acf.email,
-            sameAs: acf.socials?.map((social) => social.link.url) || [],
+            sameAs: acf.socials?.map((social) => social?.link?.url).filter(Boolean) || [],
           })
         }}
       />

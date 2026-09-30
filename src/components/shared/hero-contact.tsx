@@ -21,7 +21,8 @@ export default function HeroContact({
     <div className='px-3 py-8 md:px-8 xl:md:px-[60px] flex items-center justify-between flex-col sm:flex-row gap-6 border border-gray-200'>
       <div className='w-full flex items-center justify-center flex-col md:flex-row gap-10 lg:gap-[74px]'>
         <div className='flex items-center gap-3 xl:gap-6'>
-          {socials.map((social) => (
+          {/* ACF returns null for an empty repeater and "" for an unset icon/link. */}
+          {socials?.filter((social) => social?.icon?.source_url && social?.link?.url).map((social) => (
             <Link key={social.icon.id} href={social.link.url} target={social.link.target} rel="noopener noreferrer">
               <Image src={social.icon.source_url} alt={`Social icon ${social.link.title}`} width={40} height={40} />
             </Link>
@@ -29,15 +30,15 @@ export default function HeroContact({
         </div>
 
         <div className='text-center'>
-          {phone?.numbers.map((item, i) => {
+          {phone?.numbers?.map((item, i) => {
             const cleared = clearNumber(item.number)
             return (
               <Link key={i} href={cleared ? `tel:${cleared}` : '#'} className='block text-xl xl:text-2xl'>{item.number}</Link>
             )
           })}
-          <span className='text-sm'>{phone.time}</span>
+          <span className='text-sm'>{phone?.time}</span>
         </div>
-        <Link href={`mailto:${email}`} className='text-center text-xl xl:text-2xl'>{email}</Link>
+        {email && <Link href={`mailto:${email}`} className='text-center text-xl xl:text-2xl'>{email}</Link>}
       </div>
     </div>
   )

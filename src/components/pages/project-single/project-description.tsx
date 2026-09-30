@@ -7,7 +7,7 @@ export default function ProjectDescription({
   text
 }: {
   content: WPRendered,
-  details: ProjectDetails[]
+  details: ProjectDetails[] | null
   text: string
 }) {
   return (
@@ -18,7 +18,7 @@ export default function ProjectDescription({
           <div dangerouslySetInnerHTML={{ __html: content.rendered }} />
         </div>
         <div className='mt-6 md:mt-0 md:justify-self-center'>
-          {details.map((detail, idx) => (
+          {details?.map((detail, idx) => (
             <div key={idx} className='flex items-center gap-1.5 md:block mb-4 last:mb-0'>
               <strong>{detail.label}:</strong>
               <p>{detail.value}</p>

@@ -37,7 +37,7 @@ export default function ProjectGallery({ gallery }: { gallery?: ProjectGalleryTy
             // Fixed aspect ratios keep every tile the same size regardless of the source image;
             // the wide tile (2 columns + gap) uses 16:9 so it matches the height of the others.
             className={cn(
-              'relative block w-full cursor-pointer overflow-hidden aspect-[65/74]',
+              'relative block w-full cursor-pointer overflow-hidden aspect-65/74',
               isWide && 'md:col-span-2 md:aspect-video'
             )}
           >

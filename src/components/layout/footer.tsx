@@ -13,7 +13,7 @@ export default async function Footer() {
     <footer>
       <div className='grid md:grid-cols-[1fr_1fr] lg:grid-cols-[1fr_639px] gap-0.5'>
         <video loop autoPlay muted playsInline disablePictureInPicture disableRemotePlayback preload="metadata" className='h-full w-full object-cover'>
-          <source src={footer.video.url} type={footer.video.mime_type} />
+          {footer.video?.url && <source src={footer.video.url} type={footer.video.mime_type} />}
         </video>
 
         <div className='bg-foreground px-10 lg:px-24 py-16 place-items-center'>

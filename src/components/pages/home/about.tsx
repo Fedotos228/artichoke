@@ -55,13 +55,16 @@ export default function About({
         <div id={block.slug?.replace(/^#/, '')} key={index} className="about-block grid gap-8 md:grid-cols-2 items-center mb-12">
           <div className="w-full order-class">
             <div className="relative w-full image-height">
-              <Image
-                src={block.image.source_url}
-                alt={block.image.alt}
-                fill
-                className="object-cover object-top"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
+              {/* A block saved without an image comes back as `image: ""`. */}
+              {block.image?.source_url && (
+                <Image
+                  src={block.image.source_url}
+                  alt={block.image.alt || ''}
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              )}
             </div>
           </div>
           <div className="w-full">
