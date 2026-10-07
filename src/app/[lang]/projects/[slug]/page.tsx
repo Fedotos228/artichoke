@@ -91,6 +91,7 @@ export default async function ProjectSinglePage({
     acf: {
       details,
       gallery,
+      albums,
       short_description
     }
   } = project
@@ -105,7 +106,7 @@ export default async function ProjectSinglePage({
         <ProjectHero title={title} thumbnail={thumbnail} back={dictionary.projects.back} lang={lang} />
         <div className='max-w-[1194px] mx-auto px-4 py-20'>
           <ProjectDescription content={content} details={details} text={dictionary.projects.about} />
-          <ProjectGallery gallery={gallery} />
+          <ProjectGallery gallery={gallery} albums={albums} />
         </div>
         <Script
           id="creative-work-jsonld"

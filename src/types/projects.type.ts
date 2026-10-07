@@ -27,6 +27,8 @@ export interface WProjectSingle extends WProjectsCard {
   acf: {
     details: ProjectDetails[]
     gallery: ProjectGallery[]
+    // `null` when the project has no albums yet — the page falls back to `gallery`.
+    albums?: ProjectAlbum[] | null
     short_description: string
   }
 }
@@ -38,6 +40,11 @@ export interface ProjectDetails {
 
 export interface ProjectGallery {
   image: FeaturedMediaWP
+}
+
+export interface ProjectAlbum {
+  title: string
+  images: FeaturedMediaWP[]
 }
 
 export type ProjectSlugTypes = Array<{ slug: string }>

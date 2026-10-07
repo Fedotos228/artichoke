@@ -61,7 +61,7 @@ async function withFeaturedMedia(res: WithMaybeMediaId<WProjectsCard>[], lang?: 
 }
 
 async function getAllProjects(lang: Locale): Promise<WProjectsCard[]> {
-  const res = await wpFetch<WithMaybeMediaId<WProjectsCard>[]>('/projects?_fields=id,slug,title,featured_media&orderby=date&order=desc', {}, undefined, lang, ['projects'])
+  const res = await wpFetch<WithMaybeMediaId<WProjectsCard>[]>('/projects?_fields=id,slug,title,featured_media&orderby=date&order=asc', {}, undefined, lang, ['projects'])
 
   // A locale with no translated projects yet is a valid state, not an error.
   if (!res || res.length === 0) return []
